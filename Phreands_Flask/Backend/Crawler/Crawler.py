@@ -6,17 +6,17 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 driver = webdriver.Chrome()
-
+# Go to SEC company search website
 driver.get("https://www.sec.gov/edgar/searchedgar/companysearch")
 
+# Enter the company name we want to look up
 search = driver.find_element(By.ID, "edgar-company-person")
 search.send_keys("MSFT")
 search.send_keys(Keys.RETURN)
 
+# Wait for the internet to work
 wait = WebDriverWait(driver, 10)
 time.sleep(5)
-# bar = driver.find_element(By.XPATH, '/html/body/main/div[4]/div[2]/div[3]/h5/a')
-# bar.click()
 
 # Get the most recent three 10-Q and one 10-K report
 link1 = driver.find_element(
