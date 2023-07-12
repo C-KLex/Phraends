@@ -5,9 +5,17 @@ from bs4 import BeautifulSoup
 
 
 def retrieve_article_text(url):
+
+    # Sending an HTTP GET request to the URL
     response = requests.get(url)
+
+    # Extracting the HTML content from the response
     html_text = response.text
+
+    # Parsing the HTML using BeautifulSoup
     soup = BeautifulSoup(html_text, "html.parser")
+
+    # Finding the specific div element that contains the article content, which is the syntax for cnn website
     article_element = soup.find("div", class_="article__content")
     article_text = article_element.get_text(
         strip=True) if article_element else ""
@@ -15,11 +23,17 @@ def retrieve_article_text(url):
 
 
 def generate_summarized_sentences(article_text):
+
+    # Creating a summarization pipeline using the BART model
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
+    # Generating a summarized output using the pipeline
     summarized_output = summarizer(
         article_text, max_length=130, min_length=30, do_sample=False)
     summarized_text = summarized_output[0]["summary_text"].strip(
     ) if summarized_output else ""
+
+    # Splitting the summarized text into individual sentences using regular expressions
     sentences = re.split(
         r"(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s", summarized_text)
     return sentences
