@@ -1,0 +1,18 @@
+body {
+    font-family: Arial;
+    background-color: #E0FFFF;
+}
+
+.content {
+    background-color: #87CEEB;
+    width: 300px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.content .title {
+    text-align: center;
+}
