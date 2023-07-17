@@ -42,3 +42,41 @@ def get_link_of_10q_10k(ticker):
     list_of_links.append(link4)
 
     return list_of_links
+
+
+def get_news_from_investopedia(ticker):
+    driver = webdriver.Chrome()
+    driver.get("https://www.investopedia.com/")
+
+    # Click the search button
+    search_point = driver.find_element(By.CLASS_NAME, "general-search__icon-button")
+    search_point.click()
+
+    # Send in the ticker name
+    search = driver.find_element(
+        By.XPATH, "/html/body/header/div[1]/div[3]/ul/li/div/form/div/input"
+    )
+    search.send_keys(str(ticker))
+    search.send_keys(Keys.RETURN)
+
+    # Collect the 10 latest news content
+    content = []
+    driver.implicitly_wait(5)
+    for i in range(0, 10):
+        if i == 0:
+            elem = driver.find_element(By.XPATH, '//*[@id="search-results__link_1-0"]')
+        else:
+            elem = driver.find_element(
+                By.XPATH, f'//*[@id="search-results__link_1-0-{i}"]'
+            )
+        url_element = elem.get_attribute("href")
+        # Open the new window
+        driver.execute_script("window.open()")
+        driver.switch_to.window(driver.window_handles[i + 1])
+        driver.get(url_element)
+        time.sleep(1)
+        search_point = driver.find_element(By.XPATH, '//*[@id="mntl-sc-page_1-0"]').text
+        content.append(search_point)
+        # window_handles[0] is a first window
+        driver.switch_to.window(driver.window_handles[0])
+    return content
