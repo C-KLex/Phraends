@@ -59,10 +59,11 @@ def get_news_from_investopedia(ticker):
     search.send_keys(str(ticker))
     search.send_keys(Keys.RETURN)
 
-    # Collect the 10 latest news content
-    content = []
+    # Collect the 5 latest news content
+    links = []
     driver.implicitly_wait(5)
-    for i in range(0, 10):
+    f = open("the_news_texts.txt", "w")
+    for i in range(0, 5):
         if i == 0:
             elem = driver.find_element(By.XPATH, '//*[@id="search-results__link_1-0"]')
         else:
@@ -70,13 +71,17 @@ def get_news_from_investopedia(ticker):
                 By.XPATH, f'//*[@id="search-results__link_1-0-{i}"]'
             )
         url_element = elem.get_attribute("href")
+        links.append(url_element)
         # Open the new window
         driver.execute_script("window.open()")
         driver.switch_to.window(driver.window_handles[i + 1])
         driver.get(url_element)
         time.sleep(1)
         search_point = driver.find_element(By.XPATH, '//*[@id="mntl-sc-page_1-0"]').text
-        content.append(search_point)
+        f.write("This is the %dth article \r\n\n" % (i + 1))
+        f.write(str(search_point))
+        f.write("\n\n\n")
         # window_handles[0] is a first window
         driver.switch_to.window(driver.window_handles[0])
-    return content
+    driver.quit()
+    return links, open("the_news_texts.txt", mode="r")  # .read()
