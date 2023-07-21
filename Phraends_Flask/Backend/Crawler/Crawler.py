@@ -7,6 +7,19 @@ import time
 
 
 def get_link_of_10q_10k(ticker):
+    """
+    Summary: 
+        WebCrawl the most recent quarterly and annually report from SEC
+    
+    Description:
+        Currently this function only returns the links of the reports. 
+
+    Args:
+        ticker (string): the ticker name of the stock
+    
+    Returns:
+        list_of_links (list): The list contains the four links of the reports.
+    """
     driver = webdriver.Chrome()
     # Go to SEC company search website
     driver.get("https://www.sec.gov/edgar/searchedgar/companysearch")
@@ -45,6 +58,17 @@ def get_link_of_10q_10k(ticker):
 
 
 def get_news_from_investopedia(ticker):
+    """
+    Summary: 
+        Search the ticker name in investopedia, and then crawl down the first five articles.
+    
+    Args:
+        ticker (string): the ticker name of the stock
+    
+    Returns:
+        links (list): the links to the five articles
+        open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
+    """
     driver = webdriver.Chrome()
     driver.get("https://www.investopedia.com/")
 
@@ -84,10 +108,24 @@ def get_news_from_investopedia(ticker):
         # window_handles[0] is a first window
         driver.switch_to.window(driver.window_handles[0])
     driver.quit()
-    return links, open("the_news_texts.txt", mode="r")  # .read()
+    return (
+        links,
+        open("the_news_texts.txt", mode="r"),
+    )  # type .read() can read the content
 
 
 def get_news_from_dow_jones(ticker):  # apple
+    """
+    Summary: 
+        Search the ticker name in Dow Jones, and then crawl down the first five articles.
+    
+    Args:
+        ticker (string): the ticker name of the stock
+    
+    Returns:
+        links (list): the links to the five articles
+        open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
+    """
     driver = webdriver.Chrome()
     driver.get("https://www.dowjones.com/")
 
@@ -135,8 +173,8 @@ def get_news_from_dow_jones(ticker):  # apple
         # window_handles[0] is a first window
         driver.switch_to.window(driver.window_handles[0])
     driver.quit()
-    return links, open("the_news_texts.txt", mode="r")  # .read()
-
-
-print(get_news_from_dow_jones("apple"))
+    return (
+        links,
+        open("the_news_texts.txt", mode="r"),
+    )  # type .read() can read the content
 
