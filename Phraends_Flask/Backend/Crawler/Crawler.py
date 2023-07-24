@@ -178,3 +178,59 @@ def get_news_from_dow_jones(ticker):  # apple
         open("the_news_texts.txt", mode="r"),
     )  # type .read() can read the content
 
+# copy from J's branch, will modify
+def get_news_from_investopedia(ticker):
+    """
+    Summary: 
+        Search the ticker name in investopedia, and then crawl down the first five articles.
+    
+    Args:
+        ticker (string): the ticker name of the stock
+    
+    Returns:
+        links (list): the links to the five articles
+        open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
+    """
+    driver = webdriver.Chrome()
+    driver.get("https://www.investopedia.com/")
+
+    # Click the search button
+    search_point = driver.find_element(By.CLASS_NAME, "general-search__icon-button")
+    search_point.click()
+
+    # Send in the ticker name
+    search = driver.find_element(
+        By.XPATH, "/html/body/header/div[1]/div[3]/ul/li/div/form/div/input"
+    )
+    search.send_keys(str(ticker))
+    search.send_keys(Keys.RETURN)
+
+    # Collect the 5 latest news content
+    links = []
+    driver.implicitly_wait(5)
+    f = open("the_news_texts.txt", "w")
+    for i in range(0, 5):
+        if i == 0:
+            elem = driver.find_element(By.XPATH, '//*[@id="search-results__link_1-0"]')
+        else:
+            elem = driver.find_element(
+                By.XPATH, f'//*[@id="search-results__link_1-0-{i}"]'
+            )
+        url_element = elem.get_attribute("href")
+        links.append(url_element)
+        # Open the new window
+        driver.execute_script("window.open()")
+        driver.switch_to.window(driver.window_handles[i + 1])
+        driver.get(url_element)
+        time.sleep(1)
+        search_point = driver.find_element(By.XPATH, '//*[@id="mntl-sc-page_1-0"]').text
+        f.write("This is the %dth article \r\n\n" % (i + 1))
+        f.write(str(search_point))
+        f.write("\n\n\n")
+        # window_handles[0] is a first window
+        driver.switch_to.window(driver.window_handles[0])
+    driver.quit()
+    return (
+        links,
+        open("the_news_texts.txt", mode="r"),
+    )  # type .read() can read the content
