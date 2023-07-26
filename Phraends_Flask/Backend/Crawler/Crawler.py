@@ -7,6 +7,19 @@ import time
 
 
 def get_link_of_10q_10k(ticker):
+    """
+    Summary: 
+        WebCrawl the most recent quarterly and annually report from SEC
+    
+    Description:
+        Currently this function only returns the links of the reports. 
+
+    Args:
+        ticker (string): the ticker name of the stock
+    
+    Returns:
+        list_of_links (list): The list contains the four links of the reports.
+    """
     driver = webdriver.Chrome()
     # Go to SEC company search website
     driver.get("https://www.sec.gov/edgar/searchedgar/companysearch")
@@ -45,6 +58,17 @@ def get_link_of_10q_10k(ticker):
 
 
 def get_news_from_investopedia(ticker):
+    """
+    Summary: 
+        Search the ticker name in investopedia, and then crawl down the first five articles.
+    
+    Args:
+        ticker (string): the ticker name of the stock
+    
+    Returns:
+        links (list): the links to the five articles
+        open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
+    """
     driver = webdriver.Chrome()
     driver.get("https://www.investopedia.com/")
 
@@ -59,10 +83,11 @@ def get_news_from_investopedia(ticker):
     search.send_keys(str(ticker))
     search.send_keys(Keys.RETURN)
 
-    # Collect the 10 latest news content
-    content = []
+    # Collect the 5 latest news content
+    links = []
     driver.implicitly_wait(5)
-    for i in range(0, 10):
+    f = open("the_news_texts.txt", "w")
+    for i in range(0, 5):
         if i == 0:
             elem = driver.find_element(By.XPATH, '//*[@id="search-results__link_1-0"]')
         else:
@@ -70,13 +95,86 @@ def get_news_from_investopedia(ticker):
                 By.XPATH, f'//*[@id="search-results__link_1-0-{i}"]'
             )
         url_element = elem.get_attribute("href")
+        links.append(url_element)
         # Open the new window
         driver.execute_script("window.open()")
         driver.switch_to.window(driver.window_handles[i + 1])
         driver.get(url_element)
         time.sleep(1)
         search_point = driver.find_element(By.XPATH, '//*[@id="mntl-sc-page_1-0"]').text
-        content.append(search_point)
+        f.write("This is the %dth article \r\n\n" % (i + 1))
+        f.write(str(search_point))
+        f.write("\n\n\n")
         # window_handles[0] is a first window
         driver.switch_to.window(driver.window_handles[0])
-    return content
+    driver.quit()
+    return (
+        links,
+        open("the_news_texts.txt", mode="r"),
+    )  # type .read() can read the content
+
+
+def get_news_from_dow_jones(ticker):  # apple
+    """
+    Summary: 
+        Search the ticker name in Dow Jones, and then crawl down the first five articles.
+    
+    Args:
+        ticker (string): the ticker name of the stock
+    
+    Returns:
+        links (list): the links to the five articles
+        open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
+    """
+    driver = webdriver.Chrome()
+    driver.get("https://www.dowjones.com/")
+
+    # Click the search button
+    search_point = driver.find_element(
+        By.XPATH, "/html/body/div[2]/header/div/div[2]/a[1]"
+    )
+    search_point.click()
+
+    # Send in the ticker name
+    search = driver.find_element(
+        By.XPATH, "/html/body/div[6]/div/div/div/div/div/div[3]/form/input"
+    )
+    search.send_keys(str(ticker))
+    search.send_keys(Keys.RETURN)
+
+    # Collect the 5 latest news content
+    links = []
+    driver.implicitly_wait(5)
+    f = open("the_news_texts.txt", "w")
+    for i in range(0, 5):
+        if i == 0:
+            elem = driver.find_element(
+                By.XPATH,
+                "/html/body/div[2]/section[2]/div/div/ul/li[2]/div[1]/div[2]/h3/a",
+            )
+        else:
+            elem = driver.find_element(
+                By.XPATH,
+                f"/html/body/div[2]/section[2]/div/div/ul/li[2]/div[{i+1}]/div[2]/h3/a",
+            )
+        url_element = elem.get_attribute("href")
+        links.append(url_element)
+        # Open the new window
+        driver.execute_script("window.open()")
+        driver.switch_to.window(driver.window_handles[i + 1])
+        driver.get(url_element)
+        time.sleep(1)
+        search_point = driver.find_element(
+            By.XPATH, "/html/body/div[2]/section[2]/div/div/div/div"
+        ).text
+        f.write("This is the %dth article \r\n\n" % (i + 1))
+        f.write(str(search_point))
+        f.write("\n\n\n")
+        # window_handles[0] is a first window
+        driver.switch_to.window(driver.window_handles[0])
+    driver.quit()
+    return (
+        links,
+        open("the_news_texts.txt", mode="r"),
+    )  # type .read() can read the content
+
