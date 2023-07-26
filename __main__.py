@@ -11,9 +11,9 @@ NLP Application for Summarizing Finance Article
 # add the drop down menu
 sp500_df = pd.read_csv('constituents.csv')
 sp500_ls = sp500_df['Symbol'].tolist()
-st.selectbox('Please enter a stock ticker that you would like to learn more about:', sp500_ls)
+ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', sp500_ls)
 
-ticker = st.text_input('Please enter a stock ticker that you would like to learn more about:')
+# ticker = st.text_input('Please enter a stock ticker that you would like to learn more about:')
 
 st.write("""1. """, ticker)
 st.write("""2. """, """phrase2""")
