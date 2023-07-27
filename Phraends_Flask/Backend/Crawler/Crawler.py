@@ -8,15 +8,15 @@ import time
 
 def get_link_of_10q_10k(ticker):
     """
-    Summary: 
+    Summary:
         WebCrawl the most recent quarterly and annually report from SEC
-    
+
     Description:
-        Currently this function only returns the links of the reports. 
+        Currently this function only returns the links of the reports.
 
     Args:
         ticker (string): the ticker name of the stock
-    
+
     Returns:
         list_of_links (list): The list contains the four links of the reports.
     """
@@ -59,15 +59,15 @@ def get_link_of_10q_10k(ticker):
 
 def get_news_from_investopedia(ticker):
     """
-    Summary: 
+    Summary:
         Search the ticker name in investopedia, and then crawl down the first five articles.
-    
+
     Args:
         ticker (string): the ticker name of the stock
-    
+
     Returns:
         links (list): the links to the five articles
-        open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
+        articles (list): the list contains the five articles
     """
     driver = webdriver.Chrome()
     driver.get("https://www.investopedia.com/")
@@ -85,8 +85,8 @@ def get_news_from_investopedia(ticker):
 
     # Collect the 5 latest news content
     links = []
+    articles = []
     driver.implicitly_wait(5)
-    f = open("the_news_texts.txt", "w")
     for i in range(0, 5):
         if i == 0:
             elem = driver.find_element(By.XPATH, '//*[@id="search-results__link_1-0"]')
@@ -102,29 +102,24 @@ def get_news_from_investopedia(ticker):
         driver.get(url_element)
         time.sleep(1)
         search_point = driver.find_element(By.XPATH, '//*[@id="mntl-sc-page_1-0"]').text
-        f.write("This is the %dth article \r\n\n" % (i + 1))
-        f.write(str(search_point))
-        f.write("\n\n\n")
+        articles.append(str(search_point).replace("\n", " "))
         # window_handles[0] is a first window
         driver.switch_to.window(driver.window_handles[0])
     driver.quit()
-    return (
-        links,
-        open("the_news_texts.txt", mode="r"),
-    )  # type .read() can read the content
+    return links, articles
 
 
 def get_news_from_dow_jones(ticker):  # apple
     """
-    Summary: 
+    Summary:
         Search the ticker name in Dow Jones, and then crawl down the first five articles.
-    
+
     Args:
         ticker (string): the ticker name of the stock
-    
+
     Returns:
         links (list): the links to the five articles
-        open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
+        articles (list): the list contains the five articles
     """
     driver = webdriver.Chrome()
     driver.get("https://www.dowjones.com/")
@@ -144,8 +139,8 @@ def get_news_from_dow_jones(ticker):  # apple
 
     # Collect the 5 latest news content
     links = []
+    articles = []
     driver.implicitly_wait(5)
-    f = open("the_news_texts.txt", "w")
     for i in range(0, 5):
         if i == 0:
             elem = driver.find_element(
@@ -167,14 +162,8 @@ def get_news_from_dow_jones(ticker):  # apple
         search_point = driver.find_element(
             By.XPATH, "/html/body/div[2]/section[2]/div/div/div/div"
         ).text
-        f.write("This is the %dth article \r\n\n" % (i + 1))
-        f.write(str(search_point))
-        f.write("\n\n\n")
+        articles.append(str(search_point).replace("\n", " "))
         # window_handles[0] is a first window
         driver.switch_to.window(driver.window_handles[0])
     driver.quit()
-    return (
-        links,
-        open("the_news_texts.txt", mode="r"),
-    )  # type .read() can read the content
-
+    return links, articles
