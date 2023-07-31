@@ -4,6 +4,23 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import time
+import yfinance as yf
+
+
+def get_company_name_from_ticker_name(ticker: str):
+    """
+    Summary:
+        To avoid the problem that specific websites cannot obtain article from ticker name,
+        we write this function to obtain the company name of the stock ticker.
+
+    Args:
+        ticker (string): the ticker name of the stock.
+
+    Returns:
+        company name (string): the name of the company.
+    """
+    company_name = yf.Ticker(ticker).info["longName"].split(" ", 1)[0]
+    return company_name
 
 
 def get_link_of_10q_10k(ticker):
@@ -167,3 +184,25 @@ def get_news_from_dow_jones(ticker):  # apple
         driver.switch_to.window(driver.window_handles[0])
     driver.quit()
     return links, articles
+
+
+def main(ticker: str):
+    """
+    Summary:
+        Call every functions that can crawl the articles, and append all the articles to one list.
+
+    Args:
+        ticker (string): the ticker name of the stock
+
+    Returns:
+        articles (list): the list contains the articles
+    """
+    company_name = get_company_name_from_ticker_name(ticker)
+    articles = []
+    investo = get_news_from_investopedia(ticker)[1]
+    dow = get_news_from_dow_jones(company_name)[1]
+
+    articles.append(investo)
+    articles.append(dow)
+
+    return articles
