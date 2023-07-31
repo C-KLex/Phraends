@@ -182,7 +182,7 @@ def get_news_from_dow_jones(ticker):  # apple
 def get_news_from_cnbc(ticker):
     """
     Summary: 
-        Search the ticker name in cnbd, and then crawl down the first five articles.
+        Search the ticker name in cnbc, and then crawl down the first five articles.
     
     Args:
         ticker (string): the ticker name of the stock
@@ -293,3 +293,4 @@ def get_news_from_barrons(ticker):
         links,
         open("the_news_texts.txt", mode="r"),
     )  # type .read() can read the content
+
