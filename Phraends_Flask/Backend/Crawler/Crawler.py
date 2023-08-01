@@ -211,11 +211,8 @@ def get_news_from_cnbc(ticker):
     f = open("the_news_texts.txt", "w")
     for i in range(0, 5):
 
-        if i == 0:
-            elem = driver.find_element(By.XPATH, '//*[@id="QuotePage-latestNews-0-1"]/div/div/a')
-        else:
-            elem = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-1"]/div/div/a')
-        
+        elem = driver.find_element(By.XPATH, '//*[@id="QuotePage-latestNews-0-{i+1}"]/div/div/a')
+
         url_element = elem.get_attribute("href")
         links.append(url_element)
         # Open the new window
