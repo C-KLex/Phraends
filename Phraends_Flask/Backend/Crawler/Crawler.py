@@ -212,9 +212,9 @@ def get_news_from_cnbc(ticker):
     for i in range(0, 5):
 
         if i == 0:
-            elem = driver.find_element(By.XPATH, '/html/body/div[2]/div/div[1]/div[3]/div/div[2]/div[1]/div[6]/div[5]/ul/li[1]/div/div/a')
+            elem = driver.find_element(By.XPATH, '/html/body/div[2]/div/div[1]/div[3]/div/div[2]/div[1]/div[6]/div[3]/ul/li[1]/div/div/a')
         else:
-            elem = driver.find_element(By.XPATH, f'/html/body/div[2]/div/div[1]/div[3]/div/div[2]/div[1]/div[6]/div[5]/ul/li[{i+1}]/div/div/a')
+            elem = driver.find_element(By.XPATH, f'/html/body/div[2]/div/div[1]/div[3]/div/div[2]/div[1]/div[6]/div[3]/ul/li[{i+1}]/div/div/a')
         
         url_element = elem.get_attribute("href")
         links.append(url_element)
