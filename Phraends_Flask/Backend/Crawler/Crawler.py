@@ -200,7 +200,7 @@ def get_news_from_cnbc(ticker):
 
     # Send in the ticker name
     search = driver.find_element(
-        By.XPATH, "/html/body/div[3]/div/div[1]/header/div[3]/div/div/div[3]/section/div[2]/div[1]/section/form/input[2]"
+        By.XPATH, '/html/body/div[3]/div/div[1]/header/div[2]/div/div/div[3]/section/div[2]/div[1]/section/form/input[2]'
     )
     search.send_keys(str(ticker))
     search.send_keys(Keys.RETURN)
@@ -210,12 +210,11 @@ def get_news_from_cnbc(ticker):
     driver.implicitly_wait(5)
     f = open("the_news_texts.txt", "w")
     for i in range(0, 5):
+
         if i == 0:
-            elem = driver.find_element(By.XPATH, '//*[@id="QuotePage-latestNews-0-0"]/div/div/a')
+            elem = driver.find_element(By.XPATH, '/html/body/div[2]/div/div[1]/div[3]/div/div[2]/div[1]/div[6]/div[5]/ul/li[1]/div/div/a')
         else:
-            elem = driver.find_element(
-                By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i+1}"]/div/div/a'
-            )
+            elem = driver.find_element(By.XPATH, f'/html/body/div[2]/div/div[1]/div[3]/div/div[2]/div[1]/div[6]/div[5]/ul/li[{i+1}]/div/div/a')
         
         url_element = elem.get_attribute("href")
         links.append(url_element)
@@ -224,7 +223,7 @@ def get_news_from_cnbc(ticker):
         driver.switch_to.window(driver.window_handles[i + 1])
         driver.get(url_element)
         time.sleep(1)
-        search_point = driver.find_element(By.XPATH, '//*[@id="SpecialReportArticle-ArticleBody-6"]').text
+        search_point = driver.find_element(By.XPATH, '/html/body/div[10]/div/main/article[1]').text
         f.write("This is the %dth article \r\n\n" % (i + 1))
         f.write(str(search_point))
         f.write("\n\n\n")
@@ -236,3 +235,4 @@ def get_news_from_cnbc(ticker):
         open("the_news_texts.txt", mode="r"),
     )  # type .read() can read the content
 
+get_news_from_cnbc('TSLA')
