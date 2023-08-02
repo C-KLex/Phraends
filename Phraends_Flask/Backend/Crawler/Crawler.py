@@ -200,7 +200,7 @@ def get_news_from_cnbc(ticker):
 
     # Send in the ticker name
     search = driver.find_element(
-        By.XPATH, '/html/body/div[3]/div/div[1]/header/div[2]/div/div/div[3]/section/div[2]/div[1]/section/form/input[2]'
+        By.XPATH, '/html/body/div[3]/div/div[1]/header/div[4]/div/div/div[3]/section/div[2]/div[1]/section/form/input[2]'
     )
     search.send_keys(str(ticker))
     search.send_keys(Keys.RETURN)
@@ -212,14 +212,14 @@ def get_news_from_cnbc(ticker):
     for i in range(0, 5):
         
         try:
-            skip_sign = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i+1}"]/div/div/a[2]')
+            skip_sign = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a[2]')
             continue
         except:
             pass
 
         try:
 
-            elem = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i+1}"]/div/div/a')
+            elem = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a')
             url_element = elem.get_attribute("href")
             links.append(url_element)
             # Open the new window

@@ -1,55 +1,38 @@
 This is the 1th article 
 
-In this article
-AAPL
--0.81 (-0.42%)
-Follow your favorite stocks
-CREATE FREE ACCOUNT
-Tim Cook arrives at Sun Valley’s Allen & Company meeting in Sun Valley, Idaho.
+Disney CEO Bob Iger speaking with CNBC’s David Faber at the Allen&Co. Annual Conference in Sun Valley, Idaho. 
 David A. Grogan | CNBC
-Apple
-is expected to post its third consecutive quarterly revenue decline when it reports earnings after the bell Thursday. Wall Street expects $81.7 billion in sales, which would be down about 2.3% from last year.
-Apple’s stock is up over 51% so far in 2023, hitting all-time highs. Investors see it as a safe haven with strong cash flow, despite worries about slowing demand for consumer goods, including PCs and smartphones.
-RELATED INVESTING NEWS
-Here’s the trade on AMD ahead of earnings, according to top analysts
-Michelle Fox
-5 HOURS AGO
-This may be the most bullish note we’ve seen on Nvidia — signaling what’s next for the stock
-Zev Fima
-A DAY AGO
-Tech investor Paul Meeks says Apple is getting ‘really expensive’ and needs to ‘get aggressive’ on A.I.
-Sarah Min
-A DAY AGO
-Analysts will also want to hear about how the current quarter, which ends in September, is shaking out. Apple hasn’t given guidance since 2020, citing uncertainty, but it provides investors with some data points that they can use to determine whether Apple sees overall sales growing or shrinking.
-The company’s forecast will be more important. It may give clues as to whether global economies are set up for a “soft landing” after two years of interest rate hikes.
-The June period is typically Apple’s slowest quarter of the year, while its fourth fiscal quarter often captures back-to-school laptop spending, a few days of new iPhone model sales — which usually come out in September — and shows Apple’s momentum heading into the holiday season.
-“What will matter most will be management’s September quarter,” wrote Morgan Stanley analyst Erik Woodring in July, adding that he expects Apple to guide to year-over-year revenue growth again.
-Emerging markets and China
-Some analysts are eager to see Apple give data points on India sales. Apple CEO Tim Cook traveled to the country in April and spoke about hopes for significant growth in the region. India became one of Apple’s top five iPhone markets during the quarter, according to analyst estimates.
-“On the call, we look for additional details on its expansion in India, including its retail and manufacturing presence,” D.A. Davidson analyst Tom Forte wrote this week.
-But Apple’s older growth driver, China, is likely to be closely watched as well. Greater China — including Hong Kong and Taiwan — is Apple’s third-largest sales region, and it has reported two straight quarters of revenue decline, even as the region reopened after years of strict Covid lockdowns.
-“In our conversations, most investors feel that a soft China could pose a risk to the numbers and further commentary, but we feel that Apple’s position in China is on a solid footing and that the company is likely to see only a small if any decline in its iPhone sales,” wrote Piper Sandler analyst Harsh Kumar.
-Kumar said if China ends up being weak, it could be offset by strong sales momentum in India.
-Apple mainly manufactures in China and investors will want to hear that the company has overcome many of the supply chain snags that have hampered sales over the past two years. If Apple stockpiled parts and has enough to make what it needs to produce, it could help margins, analysts say.
-Services growth and A.I. acceleration
-Apple’s profitable services division includes monthly subscriptions such as Apple Music, warranties under AppleCare, fees from the App Store, advertising revenue from search licensing agreements with Google, payments from Apple Pay and other products.
-Wall Street likes to see Apple’s services business grow regularly and smoothly, because the margins on services are so much higher than when Apple sells hardware. In particular, many analysts want to see services reaccelerate after a few quarters of weak growth because of lagging App Store software sales.
-Apple suggested a 5% year-over-year increase in services, and FactSet’s estimates more than $20.7 billion in revenue. But analysts will want to see Apple signal more growth than that.
-“For the Services business, we expect year-over-year revenue growth to accelerate from the +5% level expected in [fiscal third quarter,] with our checks suggesting online advertising has improved,” Deutsche Bank analyst Sidney Ho wrote.
-Analysts will also likely ask about artificial intelligence, given the industrywide obsession with the technology and a recent Bloomberg report that Apple is developing a ChatGPT-like AI model internally. Don’t expect Apple to gush about what it’s working on internally, though.
-“With the official intro of Vision Pro, we expect Apple’s updated comments on its AI aspirations to be a focus (albeit likely very high-level),” wrote Wells Fargo analyst Aaron Rakers.
-Estimates
-Apple reports its results by product line, which can give investors a look into which businesses are thriving and which ones are in a down cycle.
-IPhone, iPad and Mac sales are all expected to be down on an annual basis, with iPad sales projected to drop nearly 11%, according to FactSet estimates. Wearables, the product category with headphones and Apple Watch — and what will likely be the reporting category for Vision Pro when it goes on sale — is projected to decline less than 1%.
-However, analysts expect Apple’s services business to grow 5.2% on an annual basis, which would be a bright spot for the report.
-Here’s what Wall Street is expecting, per FactSet estimates:
-Revenue: $81.7 billion
-EPS: $1.19 per share
-Here’s what to expect from the company’s product lines, per FactSet estimates:
-iPhone revenue: $40.2 billion
-iPad revenue: $6.4 billion
-Mac revenue: $6.3 billion
-Other products: $8.3 billion
-Services: $20.7 billion
+Disney
+CEO Bob Iger has taken the unusual step of paying former executives Kevin Mayer and Tom Staggs a consulting fee to help him solve a complex problem: what to do with ESPN.
+Mayer and Staggs are the co-CEOs of Candle Media. Both men are close with Iger and have served as informal advisors to him in the past. They’re working with ESPN President Jimmy Pitaro on the strategic options for ESPN and, to a lesser degree, Disney’s other linear cable networks.
+Iger is looking for new ways to jumpstart ESPN because the rate of U.S. cable cancellations has accelerated. In years past, ESPN could still generate revenue growth by increasing programming fees for pay TV distributors, such as Comcast
+, Charter
+and DirecTV.
+That dynamic no longer exists. As ESPN revenue declines, it will become a larger anchor on Disney’s earnings. That has prompted Iger to explore different strategic alternatives.
+Iger told CNBC’s David Faber last month he has had become more confident about when ESPN will launch a direct-to-consumer product. ESPN’s best programming is still exclusive to the linear cable TV bundle. Disney offers many of its lower-rated live games on its ESPN+ streaming service, which costs $9.99 per month.
+When ESPN does decide to offer an unbundled subscription service, it will likely cause even more people to cancel pay TV. That’s why ESPN has waited so long to go direct to consumer.
+Iger declined last month to say when he planned to offer a direct-to-consumer ESPN. It likely won’t be in 2023 or 2024, according to people familiar with the matter.
+An ESPN spokesman declined to comment.
+Discussions with the leagues
+Iger wants to find minority partners to take equity stakes in ESPN. The sports network has held early talks with the National Football League, Major League Baseball, and the National Basketball Association on the concept, CNBC reported last month.
+The National Hockey League has also been involved in these conversations, according to people familiar with the matter. An NFL spokesperson declined to comment.
+Selling a part of ESPN to four professional sports leagues would be unprecedented. The leagues are focused on transitioning their products to a streaming-dominated landscape. Taking a stake in ESPN and having the network’s expertise in building an all-sports subscription service could help the leagues create a unified product and navigate the new economics outside of the traditional TV bundle.
+But a deal might also irritate their existing media partners and create potential conflicts of interest. Leagues would have a vested interest in ESPN’s success if they owned equity stakes. That may not help the leagues maximize sports rights valuations, which have traditionally risen due to bidding wars among media and technology companies such as Comcast
+’s NBCUniversal, Fox
+, Paramount Global
+, Warner Bros. Discovery
+, Apple,
+Alphabet
+and Amazon
+.
+If ESPN can’t find a suitable deal for minority partners, it has not ruled out a full spin of the network, according to a person familiar with the matter.
+Iger has resisted spinning off ESPN in the past and told CNBC he wanted to stay in the sports business. Mayer, who was executive vice president of corporate strategy at Disney before running the streaming business, has been more open minded about spinning off ESPN when he previously worked at Disney, according to people familiar with the matter.
+Mayer left the company in 2020 to take the CEO job at TikTok. He declined to comment.
+Iger told Faber last month that he wasn’t “necessarily” interested in spinning off ESPN as a separately traded company. The focus for Mayer, Staggs and Pitaro is finding a way where Disney can keep a majority stake in ESPN, according to people familiar with the matter. Disney currently owns 80% of ESPN and Hearst holds 20%.
+Iger is looking for partners who bring advantages to ESPN in either content or distribution. Still it’s unclear if another strategic company would have any interest in owning a minority stake in ESPN. If Disney is the majority owner, it would control the fate of the network.
+WATCH: Taking our flagship channels direct-to-consumer is a when, not an if, says ESPN’s Jimmy Pitaro
+WATCH NOW
+VIDEO02:05
+Taking our flagship channels direct-to-consumer is a when not an if, says ESPN Chairman Jimmy Pitaro
 
 
