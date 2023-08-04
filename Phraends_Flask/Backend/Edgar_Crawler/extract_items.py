@@ -644,9 +644,9 @@ def main():
         )
 
     LOGGER.info(f"\nItem extraction is completed successfully.")
-    # LOGGER.info(f"{sum(processed)} files were processed.")
+    LOGGER.info(f"{sum(processed)} files were processed.")
     LOGGER.info(f"Extracted filings are saved to: {extracted_filings_folder}")
 
 
-# if __name__ == "__main__":
-main()
+if __name__ == "__main__":
+    main()

@@ -125,7 +125,7 @@ def main():
             LOGGER.info(
                 f"\nThere are no more filings to download for the given years, quarters and companies"
             )
-            exit()
+            return ()
 
         df = (
             pd.concat(series_to_download)
@@ -690,5 +690,5 @@ def requests_retry_session(
     return session
 
 
-# if __name__ == "__main__":
-main()
+if __name__ == "__main__":
+    main()
