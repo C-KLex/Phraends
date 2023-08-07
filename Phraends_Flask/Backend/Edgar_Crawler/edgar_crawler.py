@@ -690,5 +690,5 @@ def requests_retry_session(
     return session
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

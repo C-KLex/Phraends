@@ -39,14 +39,12 @@ class HtmlStripper(HTMLParser):
 
     def __init__(self):
         super().__init__()
-        print(0)
         self.reset()
         self.strict = False
         self.convert_charrefs = True
         self.fed = []
 
     def handle_data(self, d):
-        print(1)
         self.fed.append(d)
 
     def get_data(self):
@@ -66,7 +64,6 @@ class ExtractItems:
         extracted_files_folder: str,
         skip_extracted_filings: bool,
     ):
-        print(2)
         self.remove_tables = remove_tables
         self.items_list = [
             "1",
@@ -104,7 +101,6 @@ class ExtractItems:
         :param html_content: The HTML content
         :return: The clean HTML content
         """
-        print(3)
         # TODO: Check if flags are required in the following regex
         html_content = re.sub(r"(<\s*/\s*(div|tr|p|li|)\s*>)", r"\1\n\n", html_content)
         html_content = re.sub(r"(<br\s*>|<br\s*/>)", r"\1\n\n", html_content)
@@ -121,7 +117,6 @@ class ExtractItems:
         :param text: String containing the financial text
         :return: String without multiple newlines
         """
-        print(4)
         text = re.sub(r"(( )*\n( )*){2,}", "#NEWLINE", text)
         text = re.sub(r"\n", " ", text)
         text = re.sub(r"(#NEWLINE)+", "\n", text).strip()
@@ -138,7 +133,6 @@ class ExtractItems:
         :param text: Raw text string
         :return: String containing normalized, clean text
         """
-        print(5)
         text = re.sub(r"[\xa0]", " ", text)
         text = re.sub(r"[\u200b]", " ", text)
 
@@ -155,7 +149,6 @@ class ExtractItems:
         text = re.sub(r"[\u2010\u2011\u2012\u2013\u2014\u2015]", "-", text)
 
         def remove_whitespace(match):
-            print(6)
             ws = r"[^\S\r\n]"
             return f'{match[1]}{re.sub(ws, r"", match[2])}{match[3]}{match[4]}'
 
@@ -212,7 +205,6 @@ class ExtractItems:
         :return non_blank_digits_percentage: Percentage of digit characters
         :return spaces_percentage: Percentage of space characters
         """
-        print(7)
         digits = sum(c.isdigit() for c in table_text)
         # letters   = sum(c.isalpha() for c in table_text)
         spaces = sum(c.isspace() for c in table_text)
@@ -238,7 +230,6 @@ class ExtractItems:
         :param is_html: Whether the document contains html code or just plain text
         :return: doc_10k: The 10-K html without numerical tables
         """
-        print(8)
         if is_html:
             tables = doc_10k.find_all("table")
 
@@ -334,7 +325,6 @@ class ExtractItems:
         :param positions: List of the end positions of previous item sections
         :return: item_section: The item/section as a text string
         """
-        print(9)
         if item_index == "9A":
             item_index = item_index.replace("A", r"[^\S\r\n]*A(?:\(T\))?")
         elif "A" in item_index:
@@ -408,7 +398,6 @@ class ExtractItems:
         :param positions: List of the end positions of previous item sections
         :return: The correct section
         """
-        print(10)
         item_section = ""
         max_match_length = 0
         max_match = None
@@ -462,7 +451,6 @@ class ExtractItems:
         :param positions: List of the end positions of previous item sections
         :return: All the remaining text until the end, starting from the specified item_index
         """
-        print(11)
         item_list = list(
             re.finditer(
                 rf"\n[^\S\r\n]*ITEM\s+{item_index}[.\-:\s].+?", text, flags=regex_flags
@@ -483,7 +471,6 @@ class ExtractItems:
 
         :param filing_metadata: a pandas series containing all filings metadata
         """
-        print(12)
         absolute_10k_filename = os.path.join(
             self.raw_files_folder, filing_metadata["filename"]
         )
@@ -573,7 +560,6 @@ class ExtractItems:
         return json_content
 
     def process_filing(self, filing_metadata):
-        print(13)
         json_filename = f'{filing_metadata["filename"].split(".")[0]}.json'
         absolute_json_filename = os.path.join(
             self.extracted_files_folder, json_filename
@@ -648,5 +634,5 @@ def main():
     LOGGER.info(f"Extracted filings are saved to: {extracted_filings_folder}")
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
