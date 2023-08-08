@@ -13,6 +13,16 @@ def get_key(dictionary: dict):
     return "key doesn't exist"
 
 
+def indict_target_company(ticker: str):
+    # Open JSON file
+    with open("Phraends_Flask/Backend/Edgar_Crawler/config.json") as f:
+        data = json.load(f)
+
+    data["edgar_crawler"]["cik_tickers"] = [ticker.upper()]
+    with open("Phraends_Flask/Backend/Edgar_Crawler/config.json", "w") as file:
+        json.dump(data, file, indent=4)
+
+
 def target_content(ticker: str):
     """
     Summary:
@@ -26,8 +36,7 @@ def target_content(ticker: str):
     """
     # Open JSON file
     with open("Phraends_Flask/Backend/Edgar_Crawler/config.json") as f:
-        data = json.load(f)
-
+        config = json.load(f)
     # Open FILINGS_METADATA.csv
     filings = pd.read_csv(
         "Phraends_Flask/Backend/Edgar_Crawler/datasets/FILINGS_METADATA.csv",
@@ -38,7 +47,7 @@ def target_content(ticker: str):
     # Get mapping from ticker to company name
     company_name = mapper.ticker_to_company_name[ticker.upper()].upper()
     target_rows = filings[filings["Company"] == company_name]
-    date_before = datetime(int(data["edgar_crawler"]["start_year"]), 1, 1)
+    date_before = datetime(int(config["edgar_crawler"]["start_year"]), 1, 1)
     # Only obtain the latest annual report
     target_rows = target_rows[target_rows["Date"] > date_before].iloc[-1]
     target_filename = target_rows["filename"].replace(".htm", ".json")
@@ -80,12 +89,13 @@ def target_content(ticker: str):
             "item_15",
         ]:
             value.replace("\n", " ").replace("\t", " ").replace("\u2019", "'")
-            position_risk = value.find("Risk Factors")
+            value = value.upper()
+            position_risk = value.find("RISK FACTORS")
             position_quant = value.find(
-                "Quantitative and Qualitative Disclosures About Market Risk"
+                "QUANTITATIVE AND QUALITATIVE DISCLOSURES ABOUT MARKET RISK"
             )
             position_manage = value.find(
-                "Management\u2019s Discussion and Analysis of Financial Condition and Results of Operations"
+                "MANAGEMENT\u2019S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS"
             )
 
             if position_risk != -1:
@@ -95,28 +105,38 @@ def target_content(ticker: str):
             if position_manage != -1:
                 order_manage[key] = position_manage
 
-    sec_content.append(
-        data[get_key(order_risk)]
-        .replace("\n", " ")
-        .replace("\t", " ")
-        .replace("\u2019", "'")
-    )
-    sec_content.append(
-        data[get_key(order_quant)]
-        .replace("\n", " ")
-        .replace("\t", " ")
-        .replace("\u2019", "'")
-    )
-    sec_content.append(
-        data[get_key(order_manage)]
-        .replace("\n", " ")
-        .replace("\t", " ")
-        .replace("\u2019", "'")
-    )
+    try:
+        sec_content.append(
+            data[get_key(order_risk)]
+            .replace("\n", " ")
+            .replace("\t", " ")
+            .replace("\u2019", "'")
+        )
+    except:
+        sec_content.append(" ")
+        print("Cannot find Risk Factors")
+
+    try:
+        sec_content.append(
+            data[get_key(order_quant)]
+            .replace("\n", " ")
+            .replace("\t", " ")
+            .replace("\u2019", "'")
+        )
+    except:
+        sec_content.append(" ")
+        print("Cannot find Quantitative and Qualitative Disclosures About Market Risk")
+
+    try:
+        sec_content.append(
+            data[get_key(order_manage)]
+            .replace("\n", " ")
+            .replace("\t", " ")
+            .replace("\u2019", "'")
+        )
+    except:
+        sec_content.append(" ")
+        print("Cannot find Management's Discussion")
     # Closing file
     f.close()
     return sec_content
-
-
-# if __name__ == "__main__":
-#     target_content("aapl")
