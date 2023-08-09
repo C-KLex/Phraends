@@ -118,8 +118,12 @@ def get_news_from_investopedia(ticker):
         driver.switch_to.window(driver.window_handles[i + 1])
         driver.get(url_element)
         time.sleep(1)
-        search_point = driver.find_element(By.XPATH, '//*[@id="mntl-sc-page_1-0"]').text
-        articles.append(str(search_point).replace("\n", " "))
+        # search_point = driver.find_element(By.XPATH, '//*[@id="mntl-sc-page_1-0"]').text
+        try:
+            search_point = driver.find_element(By.CSS_SELECTOR , '#mntl-sc-block-callout-body_1-0').text
+            articles.append(str(search_point).replace("\n", " "))
+        except:
+            print('wrong page')
         # window_handles[0] is a first window
         driver.switch_to.window(driver.window_handles[0])
     driver.quit()
@@ -206,3 +210,5 @@ def main(ticker: str):
     articles.append(dow)
 
     return articles
+
+print(get_news_from_investopedia('aapl'))
