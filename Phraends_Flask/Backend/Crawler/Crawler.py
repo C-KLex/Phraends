@@ -228,20 +228,24 @@ def get_news_from_cnbc(ticker):
                 continue
 
             except:
-                elem = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a')
-                url_element = elem.get_attribute("href")
-                links.append(url_element)
-                # Open the new window
-                driver.execute_script("window.open()")
-                driver.switch_to.window(driver.window_handles[i-skip_time + 1])
-                driver.get(url_element)
-                time.sleep(5) 
-                search_point = driver.find_element(By.XPATH, '/html/body/div[3]/div/div[1]/div[3]/div/div/div/div[3]/div[1]/div[2]').text
-                f.write("This is the %dth article \r\n\n" % (i + 1))
-                f.write(str(search_point)) 
-                f.write("\n\n\n")
-                # window_handles[0] is a first window
-                driver.switch_to.window(driver.window_handles[0])            
+                try:
+                    elem = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a')
+                    url_element = elem.get_attribute("href")
+                    links.append(url_element)
+                    # Open the new window
+                    driver.execute_script("window.open()")
+                    driver.switch_to.window(driver.window_handles[i-skip_time + 1])
+                    driver.get(url_element)
+                    time.sleep(5) 
+                    search_point = driver.find_element(By.CLASS_NAME, 'ArticleBody-articleBody').text
+                    f.write("This is the %dth article \r\n\n" % (i + 1))
+                    f.write(str(search_point)) 
+                    f.write("\n\n\n")
+                    # window_handles[0] is a first window
+                    driver.switch_to.window(driver.window_handles[0])  
+
+                except: 
+                    pass
 
     driver.quit()
     return (
@@ -249,4 +253,5 @@ def get_news_from_cnbc(ticker):
         open("the_news_texts.txt", mode="r"),
     )  # type .read() can read the content
 
-get_news_from_cnbc('AAPL')
+get_news_from_cnbc('TSLA')
+
