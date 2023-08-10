@@ -207,8 +207,9 @@ def get_news_from_cnbc(ticker):
 
     # Collect the 5 latest news content
     links = []
+    articles = []
     driver.implicitly_wait(5)
-    f = open("the_news_texts.txt", "w")
+    # f = open("the_news_texts.txt", "w")
 
     skip_time = 0
     for i in range(0, 5):
@@ -238,9 +239,10 @@ def get_news_from_cnbc(ticker):
                     driver.get(url_element)
                     time.sleep(5) 
                     search_point = driver.find_element(By.CLASS_NAME, 'ArticleBody-articleBody').text
-                    f.write("This is the %dth article \r\n\n" % (i + 1))
-                    f.write(str(search_point)) 
-                    f.write("\n\n\n")
+                    articles.append(str(search_point).replace("\n", " "))
+                    #f.write("This is the %dth article \r\n\n" % (i + 1))
+                    #f.write(str(search_point)) 
+                    #f.write("\n\n\n")
                     # window_handles[0] is a first window
                     driver.switch_to.window(driver.window_handles[0])  
 
@@ -248,10 +250,11 @@ def get_news_from_cnbc(ticker):
                     pass
 
     driver.quit()
-    return (
-        links,
-        open("the_news_texts.txt", mode="r"),
-    )  # type .read() can read the content
+    return links, articles
+    #(
+    #    links,
+    #    open("the_news_texts.txt", mode="r"),
+    #)  # type .read() can read the content
 
 get_news_from_cnbc('TSLA')
 
