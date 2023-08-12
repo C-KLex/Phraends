@@ -2,6 +2,7 @@
 *log.txt
 *datasets
 *logs
+*dev.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
