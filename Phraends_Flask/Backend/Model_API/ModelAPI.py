@@ -23,10 +23,9 @@ def summarize_article(article_text):
 
     return response['choices'][0]['message']['content']
 
-def main():
-    openai.api_key = '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'
-
-    #article_texts = Crawler.main()
+def main(article_texts):
+    
+    openai.api_key = 'KEY PLACEHOLDER'
 
     #example_articles:
     article_texts = [
