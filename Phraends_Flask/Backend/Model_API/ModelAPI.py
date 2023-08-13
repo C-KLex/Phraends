@@ -106,21 +106,21 @@ def main(article_texts):
 
     all_summaries = []
 
+    # Set this to True if you want to test the function
+    USE_AI = False
+
     for i, article_text in enumerate(article_texts, start=1):
         
-        # Set this to True if you want to test the function
-        test_function = False  
-        if test_function:
-            
+        if USE_AI:
             # Generate summarized text for each article
             summary = summarize_article(article_text)
             all_summaries.append(f"{i}. {summary}")
+
         else:
             # Just print something instead of running the function
-            print(f"Article {i} summary: This is a placeholder summary.")
+            all_summaries.append(f"Article {i} summary: This is a placeholder summary.")
 
-    if test_function:
-        return all_summaries
+    return all_summaries
 
 if __name__ == "__main__":
     main()
