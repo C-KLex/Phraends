@@ -9,12 +9,10 @@
             4
         ],
         "filing_types": [
-            "10-K",
-            "10-K405",
-            "10-KT"
+            "10-K"
         ],
         "cik_tickers": [
-            "VZ"
+            "GM"
         ],
         "user_agent": "wjordan@bu.edu",
         "raw_filings_folder": "RAW_FILINGS",
