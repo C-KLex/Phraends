@@ -1,10 +1,20 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import time
 import yfinance as yf
+
+
+def get_chrome_driver():
+    service = Service(executable_path=r'./chromedriver.exe')
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    driver = webdriver.Chrome(service = service, options=options)
+    return driver
 
 def get_company_name_from_ticker_name(ticker: str):
     """
@@ -35,7 +45,7 @@ def get_link_of_10q_10k(ticker):
     Returns:
         list_of_links (list): The list contains the four links of the reports.
     """
-    driver = webdriver.Chrome()
+    driver = get_chrome_driver()
     # Go to SEC company search website
     driver.get("https://www.sec.gov/edgar/searchedgar/companysearch")
 
@@ -84,7 +94,7 @@ def get_news_from_investopedia(ticker):
         links (list): the links to the five articles
         articles (list): the list contains the five articles
     """
-    driver = webdriver.Chrome()
+    driver = get_chrome_driver()
     driver.get("https://www.investopedia.com/")
 
     # Click the search button
@@ -142,7 +152,7 @@ def get_news_from_dow_jones(ticker):  # apple
         links (list): the links to the five articles
         articles (list): the list contains the five articles
     """
-    driver = webdriver.Chrome()
+    driver = get_chrome_driver()
     driver.get("https://www.dowjones.com/")
 
     # Click the search button
@@ -202,7 +212,7 @@ def get_news_from_cnbc(ticker):
         links (list): the links to the five articles
         open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
     """
-    driver = webdriver.Chrome()
+    driver = get_chrome_driver()
     driver.get("https://www.cnbc.com/")
 
     # Click the search button
