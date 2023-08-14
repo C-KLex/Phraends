@@ -1,16 +1,23 @@
-from flask import Flask, render_template, url_for
+from Phraends_Flask.Backend.Crawler import Crawler
+from Phraends_Flask.Backend.Model_API import ModelAPI
 
-app = Flask(__name__)
+def get_5_summary_from_5_articles(ticker: str):
+    """
+    Summary:
+        API for frontend to get 5 summaries from 5 news articles
+    
+    Args:
+        ticker: desired stock ticker
 
-@app.route("/")
-@app.route("/home")
-def home():
-    return "<h1>Home Page</h1>"
+    Returns:
+        link_list: 5 links corresponding to the 5 news articles
+        summary_list: 5 summaries corresponding to the 5 news articles
+    """
+    
+    link_list = [] 
+    summary_list = [] 
 
-@app.route("/phraends")
-def about():
-    return render_template("home.html")
+    link_list, raw_article_list = Crawler.main(ticker)
+    summary_list = ModelAPI.main(raw_article_list)
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    return link_list, summary_list

@@ -1,6 +1,5 @@
 import openai
 from Phraends_Flask.Backend.Crawler import Crawler
-from Phraends_Flask.Backend.Model_API import apikey
 
 def summarize_article(article_text):
     response = openai.ChatCompletion.create(
@@ -24,11 +23,9 @@ def summarize_article(article_text):
 
     return response['choices'][0]['message']['content']
 
-def main():
-
-    openai.api_key = apikey()
-
-    #article_texts = Crawler.main()
+def main(article_texts):
+    
+    openai.api_key = 'KEY PLACEHOLDER'
 
     #example_articles:
     article_texts = [
@@ -109,21 +106,22 @@ def main():
 
     all_summaries = []
 
+    # Set this to True if you want to test the function
+    USE_AI = False
+
     for i, article_text in enumerate(article_texts, start=1):
         
-        # Set this to True if you want to test the function
-        test_function = False  
-        if test_function:
-            
+        if USE_AI:
             # Generate summarized text for each article
             summary = summarize_article(article_text)
             all_summaries.append(f"{i}. {summary}")
+
         else:
             # Just print something instead of running the function
-            print(f"Article {i} summary: This is a placeholder summary.")
+            all_summaries.append(f"Article {i} summary: This is a placeholder summary.")
 
-    if test_function:
-        return all_summaries
+    return all_summaries
 
 if __name__ == "__main__":
     main()
+
