@@ -205,13 +205,17 @@ def main(ticker: str):
     """
     company_name = get_company_name_from_ticker_name(ticker)
     articles = []
-    investo = get_news_from_investopedia(ticker)[1]
-    dow = get_news_from_dow_jones(company_name)[1]
+    links = []
+    investo, inv_link = get_news_from_investopedia(ticker)
+    dow, dow_link  = get_news_from_dow_jones(company_name)
 
     articles.append(investo)
     articles.append(dow)
 
-    return articles
+    links.append(inv_link)
+    links.append(dow_link)
+
+    return links, articles
 
 
 if __name__ == "__main__":
