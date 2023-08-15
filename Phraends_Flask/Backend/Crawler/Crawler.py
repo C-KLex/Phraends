@@ -297,7 +297,7 @@ def main(ticker: str):
     dow_link, dow = get_news_from_dow_jones(company_name)
     cnbc_link, cnbc = get_news_from_cnbc(ticker)
 
-    articles + investo + dow + cnbc
+    articles = investo + dow + cnbc
     links = investo_link + dow_link + cnbc_link
 
     return links, articles
