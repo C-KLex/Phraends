@@ -2,11 +2,14 @@
 *log.txt
 *datasets
 *logs
+*Dev.py
 *dev.py
+*.DS_Store
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+*apikey.py
 
 # C extensions
 *.so
