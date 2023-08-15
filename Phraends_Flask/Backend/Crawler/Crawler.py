@@ -10,11 +10,12 @@ import yfinance as yf
 
 
 def get_chrome_driver():
-    service = Service(executable_path=r'./chromedriver.exe')
+    service = Service(executable_path=r"./chromedriver.exe")
     options = webdriver.ChromeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    driver = webdriver.Chrome(service = service, options=options)
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    driver = webdriver.Chrome(service=service, options=options)
     return driver
+
 
 def get_company_name_from_ticker_name(ticker: str):
     """
@@ -30,6 +31,7 @@ def get_company_name_from_ticker_name(ticker: str):
     """
     company_name = yf.Ticker(ticker).info["longName"].split(" ", 1)[0]
     return company_name
+
 
 def get_link_of_10q_10k(ticker):
     """
@@ -199,15 +201,15 @@ def get_news_from_dow_jones(ticker):  # apple
     driver.quit()
     return links, articles
 
-  
+
 def get_news_from_cnbc(ticker):
     """
-    Summary: 
+    Summary:
         Search the ticker name in cnbc, and then crawl down the first five articles.
-    
+
     Args:
         ticker (string): the ticker name of the stock
-    
+
     Returns:
         links (list): the links to the five articles
         open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
@@ -220,9 +222,7 @@ def get_news_from_cnbc(ticker):
     search_point.click()
 
     # Send in the ticker name
-    search = driver.find_element(
-        By.XPATH, '//*[@id="SearchEntry-searchForm"]/input[2]'
-    )
+    search = driver.find_element(By.XPATH, '//*[@id="SearchEntry-searchForm"]/input[2]')
     search.send_keys(str(ticker))
     search.send_keys(Keys.RETURN)
 
@@ -233,40 +233,46 @@ def get_news_from_cnbc(ticker):
 
     skip_time = 0
     for i in range(0, 5):
-        
-        try: 
+        try:
             # club or pro
-            skip_sign1 = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a[1]/img')
+            skip_sign1 = driver.find_element(
+                By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a[1]/img'
+            )
             skip_time = skip_time + 1
             continue
 
         except:
-            
             try:
                 # pure video
-                skip_sign2 = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a/img')
+                skip_sign2 = driver.find_element(
+                    By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a/img'
+                )
                 skip_time = skip_time + 1
                 continue
 
             except:
                 try:
-                    elem = driver.find_element(By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a')
+                    elem = driver.find_element(
+                        By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a'
+                    )
                     url_element = elem.get_attribute("href")
                     links.append(url_element)
                     # Open the new window
                     driver.execute_script("window.open()")
-                    driver.switch_to.window(driver.window_handles[i-skip_time + 1])
+                    driver.switch_to.window(driver.window_handles[i - skip_time + 1])
                     driver.get(url_element)
                     time.sleep(5)
-                    try: 
-                        search_point = driver.find_element(By.CLASS_NAME, 'ArticleBody-articleBody').text
+                    try:
+                        search_point = driver.find_element(
+                            By.CLASS_NAME, "ArticleBody-articleBody"
+                        ).text
                         articles.append(str(search_point).replace("\n", " "))
                     except:
                         print("can't find article body")
                     # window_handles[0] is a first window
-                    driver.switch_to.window(driver.window_handles[0])  
+                    driver.switch_to.window(driver.window_handles[0])
 
-                except: 
+                except:
                     pass
 
     driver.quit()
@@ -286,12 +292,12 @@ def main(ticker: str):
     """
     company_name = get_company_name_from_ticker_name(ticker)
     articles = []
-    links = [] 
+    links = []
     investo_link, investo = get_news_from_investopedia(ticker)
     dow_link, dow = get_news_from_dow_jones(company_name)
     cnbc_link, cnbc = get_news_from_cnbc(ticker)
 
-    articles + investo + dow + cnbc
+    articles = investo + dow + cnbc
     links = investo_link + dow_link + cnbc_link
 
     return links, articles
