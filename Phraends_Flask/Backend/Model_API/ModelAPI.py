@@ -1,7 +1,6 @@
 import openai
 from Phraends_Flask.Backend.Crawler import Crawler
-
-KEY = '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'
+import streamlit as st 
 
 def summarize_article(article_text):
     response = openai.ChatCompletion.create(
@@ -27,7 +26,7 @@ def summarize_article(article_text):
 
 def main(article_texts):
     
-    openai.api_key = KEY
+    openai.api_key = st.secrets["openai_key"]
 
     #example_articles:
     article_texts = [
