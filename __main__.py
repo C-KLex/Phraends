@@ -1,35 +1,66 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import os
-from Phraends_Flask.static.read_text_file import read_text_file
+from Phraends_Flask.util.save_search_history import save_search_history
+from Phraends_Flask.util.get_trending_tickers import get_top_trending_tickers
+from Phraends_Flask.util.phrases_output import phrases_output_example
+# from Phraends_Flask.Backend.Model_API import main
+import yfinance as yf
+import plotly.graph_objects as go
 
+# Text heading for website
 st.title("Phraends")
+st.write("NLP Application for Summarizing Financial News")
 
-st.write("""
-NLP Application for Summarizing Finance Article
- """)
+# # add the drop down menu
+# sp500_df = pd.read_csv('constituents.csv')
+# sp500_ls = sp500_df['Symbol'].tolist()
+# ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', sp500_ls)
 
 ticker = st.text_input('Please enter a stock ticker that you would like to learn more about:')
 
-## Retrieve file path for text output file that contains phrases to be output
+# Create path to find search history within 'util' folder
 phraends_folder = os.path.join(os.getcwd(), 'Phraends_Flask')
-data_folder = os.path.join(phraends_folder, 'static')
-file_name = 'phrases_output.txt'
-file_path = os.path.join(data_folder, file_name)
+data_folder = os.path.join(phraends_folder, 'util')
+search_history_csv = os.path.join(data_folder, 'search_history.csv')
+search_history_df = pd.read_csv(search_history_csv, header=0,usecols=["Ticker"])
 
-# Read in text from file
-sentences = read_text_file(file_path)
+# Get top 5 trending tickers and print them on website
+trending_tickers = get_top_trending_tickers(search_history_csv)
+st.write("🔥 Trending Tickers: " + ", ".join(trending_tickers))
 
-# Output key phrases onto website
-st.write("Key phrases for the stock ticker you entered:")
-for i, sentence in enumerate(sentences, start=1):
-    st.write(f"{i}. {sentence}")
+# Get 5 most recent searched tickers and print them on website
+most_recent_tickers = search_history_df['Ticker'].tail(5).tolist()
+st.write("⏳ Search History: ", ", ".join(most_recent_tickers))
 
-st.write("""
-🔥 Trending Tickers: 
-         """)
+# Once the user enters a ticker, save search history, run model, and output key phrases
+if ticker:
+    # Save the user-entered ticker to search history
+    save_search_history(ticker)
 
-st.write("""
-⏳ Search History: 
-""")
+    # Run the function that generates key phrases into a list (this will be replaced by model function eventually)
+    key_phrases = phrases_output_example()
+
+    # Output key phrases onto website
+    st.write("Key phrases for the stock ticker you entered:")
+    for i, sentence in enumerate(key_phrases, start=1):
+        st.write(f"{i}. {sentence}")
+
+
+# Print stock chart of selected ticker onto website
+if ticker:
+    stock_data = yf.download(ticker, start='2020-01-01', end='2023-01-01')
+    if not stock_data.empty:
+        fig = go.Figure(data=[go.Candlestick(x=stock_data.index,
+                                            open=stock_data['Open'],
+                                            high=stock_data['High'],
+                                            low=stock_data['Low'],
+                                            close=stock_data['Close'])])
+        fig.update_layout(title=f'{ticker} Stock Chart',
+                          xaxis_title='Date',
+                          yaxis_title='Price',
+                          xaxis_rangeslider_visible=False)
+        st.plotly_chart(fig)
+    else:
+        st.write(f"No stock data found for {ticker}. Please check the ticker symbol.")
+
