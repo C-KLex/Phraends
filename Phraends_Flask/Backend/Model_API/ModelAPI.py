@@ -1,7 +1,15 @@
 import openai
+import random
 from Phraends_Flask.Backend.Crawler import Crawler
 
-def summarize_article(article_text):
+def choose_random_articles(article_n, num=5):
+    if num > len(article_n):
+        num = len(article_n)
+
+    article_5 = random.sample(article_n, num)
+    return article_5
+
+def summarize_article(article):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
@@ -11,7 +19,7 @@ def summarize_article(article_text):
             },
             {
                 "role": "user",
-                "content": article_text
+                "content": article
             }
         ],
         temperature=0.5,
@@ -23,7 +31,7 @@ def summarize_article(article_text):
 
     return response['choices'][0]['message']['content']
 
-def main(article_texts):
+def main(article_5):
     
     openai.api_key = 'KEY PLACEHOLDER'
 
@@ -32,11 +40,11 @@ def main(article_texts):
     # Set this to True if you want to test the function
     USE_AI = False
 
-    for i, article_text in enumerate(article_texts, start=1):
+    for i, article in enumerate(article_5, start=1):
         
         if USE_AI:
             # Generate summarized text for each article
-            summary = summarize_article(article_text)
+            summary = summarize_article(article)
             all_summaries.append(f"{i}. {summary}")
 
         else:
