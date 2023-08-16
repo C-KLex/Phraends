@@ -125,7 +125,7 @@ def main():
             LOGGER.info(
                 f"\nThere are no more filings to download for the given years, quarters and companies"
             )
-            exit()
+            return ()
 
         df = (
             pd.concat(series_to_download)
@@ -264,6 +264,9 @@ def get_specific_indices(
 
     if cik_tickers is not None:
         if isinstance(cik_tickers, str):
+            print(cik_tickers)
+            print(os.path.exists(cik_tickers))
+            print(os.path.isfile(cik_tickers))
             if os.path.exists(cik_tickers) and os.path.isfile(
                 cik_tickers
             ):  # If filepath
@@ -690,5 +693,5 @@ def requests_retry_session(
     return session
 
 
-# if __name__ == "__main__":
-main()
+if __name__ == "__main__":
+    main()
