@@ -17,7 +17,12 @@ st.write("NLP Application for Summarizing Financial News")
 # sp500_ls = sp500_df['Symbol'].tolist()
 # ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', sp500_ls)
 
-ticker = st.text_input('Please enter a stock ticker that you would like to learn more about:')
+# add the drop down menu
+sp500_df = pd.read_csv('constituents.csv')
+sp500_ls = sp500_df['Symbol'].tolist()
+ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', sp500_ls)
+
+# ticker = st.text_input('Please enter a stock ticker that you would like to learn more about:')
 
 # Create path to find search history within 'util' folder
 phraends_folder = os.path.join(os.getcwd(), 'Phraends_Flask')
@@ -64,3 +69,10 @@ if ticker:
     else:
         st.write(f"No stock data found for {ticker}. Please check the ticker symbol.")
 
+st.write("""
+🔥 Trending Tickers: 
+         """)
+
+st.write("""
+⏳ Search History: 
+""")
