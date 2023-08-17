@@ -1,28 +1,21 @@
 import streamlit as st
 import pandas as pd
 import os
+import yfinance as yf
+import plotly.graph_objects as go
+
 from Phraends_Flask.util.save_search_history import save_search_history
 from Phraends_Flask.util.get_trending_tickers import get_top_trending_tickers
 from Phraends_Flask.util.phrases_output import phrases_output_example
-# from Phraends_Flask.Backend.Model_API import main
-import yfinance as yf
-import plotly.graph_objects as go
 
 # Text heading for website
 st.title("Phraends")
 st.write("NLP Application for Summarizing Financial News")
 
-# # add the drop down menu
-# sp500_df = pd.read_csv('constituents.csv')
-# sp500_ls = sp500_df['Symbol'].tolist()
-# ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', sp500_ls)
-
 # add the drop down menu
 sp500_df = pd.read_csv('constituents.csv')
 sp500_ls = sp500_df['Symbol'].tolist()
 ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', sp500_ls)
-
-# ticker = st.text_input('Please enter a stock ticker that you would like to learn more about:')
 
 # Create path to find search history within 'util' folder
 phraends_folder = os.path.join(os.getcwd(), 'Phraends_Flask')
@@ -68,11 +61,3 @@ if ticker:
         st.plotly_chart(fig)
     else:
         st.write(f"No stock data found for {ticker}. Please check the ticker symbol.")
-
-st.write("""
-🔥 Trending Tickers: 
-         """)
-
-st.write("""
-⏳ Search History: 
-""")
