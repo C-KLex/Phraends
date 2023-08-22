@@ -37,3 +37,4 @@ def get_summary_from_annualreport(ticker, year, section):
     """
     # Currently a mock API
     return ['summary1', 'summary2', 'summary3', 'summary4', 'summary5']
+

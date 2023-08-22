@@ -45,12 +45,22 @@ with tab1:
         save_search_history(ticker)
 
         # Run the function that generates key phrases into a list (this will be replaced by model function eventually)
-        key_phrases = phrases_output_example()
+        #key_phrases = phrases_output_example()
+
+        # new: get link and summary
+        return_2list = Phraends_Flask.get_5_summary_from_5_articles()
 
         # Output key phrases onto website
-        st.write("Key phrases for the stock ticker you entered:")
-        for i, sentence in enumerate(key_phrases, start=1):
-            st.write(f"{i}. {sentence}")
+        #st.write("Key phrases for the stock ticker you entered:")
+        #for i, sentence in enumerate(key_phrases, start=1):
+        #    st.write(f"{i}. {sentence}")
+
+        # new: Output key phrases onto website
+        st.write("Key links and summaries for the stock ticker you entered:")
+        for i in range(len(return_2list[0])):
+            # st.write(f"{i+1}. link: {testlist[0][i]} ·   · summary: {testlist[1][i]}")
+            st.write(str(i+1) + '. link: ' + return_2list[0][i])
+            st.write('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; summary: ' + return_2list[1][i])
 
 
     # Print stock chart of selected ticker onto website
