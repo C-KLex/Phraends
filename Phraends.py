@@ -3,8 +3,8 @@ import pandas as pd
 import os
 import yfinance as yf
 import plotly.graph_objects as go
-import Phraends_Flask.util.get_yearlist
 
+import Phraends_Flask.util.get_yearlist
 from Phraends_Flask.util.save_search_history import save_search_history
 from Phraends_Flask.util.get_trending_tickers import get_top_trending_tickers
 from Phraends_Flask.util.phrases_output import phrases_output_example
@@ -44,24 +44,15 @@ with tab1:
         # Save the user-entered ticker to search history
         save_search_history(ticker)
 
-        # Run the function that generates key phrases into a list (this will be replaced by model function eventually)
-        #key_phrases = phrases_output_example()
-
-        # new: get link and summary
-        return_2list = Phraends_Flask.get_5_summary_from_5_articles()
-
-        # Output key phrases onto website
-        #st.write("Key phrases for the stock ticker you entered:")
-        #for i, sentence in enumerate(key_phrases, start=1):
-        #    st.write(f"{i}. {sentence}")
+        # get link and summary
+        links, summaries = Phraends_Flask.get_5_summary_from_5_articles(ticker)
 
         # new: Output key phrases onto website
         st.write("Key links and summaries for the stock ticker you entered:")
-        for i in range(len(return_2list[0])):
-            # st.write(f"{i+1}. link: {testlist[0][i]} ·   · summary: {testlist[1][i]}")
-            st.write(str(i+1) + '. link: ' + return_2list[0][i])
-            st.write('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; summary: ' + return_2list[1][i])
-
+        for i, (link, summary) in enumerate(zip(links, summaries)):
+            num = i + 1
+            st.write(f'{num}. link: ' + link)
+            st.write('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; summary: ' + summary)
 
     # Print stock chart of selected ticker onto website
     if ticker:
@@ -81,14 +72,14 @@ with tab1:
             st.write(f"No stock data found for {ticker}. Please check the ticker symbol.")
 
 with tab2:
-    
+
     ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', sp500_ls, key="2")
     year = st.selectbox('Year:', years)
     section = st.selectbox('Section:', sections)
 
     st.write("")
     button = st.button("Run")
-    
+
     if button:
         api_returns = Phraends_Flask.get_summary_from_annualreport(ticker, year, section)
         for num in range(len(api_returns)):
