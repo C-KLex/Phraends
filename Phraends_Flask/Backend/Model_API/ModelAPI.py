@@ -1,6 +1,7 @@
 import openai
 import random
 from Phraends_Flask.Backend.Crawler import Crawler
+import streamlit as st 
 
 def choose_random_articles(article_n, num=5):
     if num > len(article_n):
@@ -33,7 +34,7 @@ def summarize_article(article):
 
 def main(article_5):
     
-    openai.api_key = 'KEY PLACEHOLDER'
+    openai.api_key = st.secrets["openai_key"]
 
     all_summaries = []
 
