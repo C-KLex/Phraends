@@ -4,9 +4,9 @@ import yfinance as yf
 import plotly.graph_objects as go
 import datetime
 
-import Phraends_Flask.Backend as backend
+import Phraends_Pkg.Backend as backend
 
-CONSTITUENTS_CSV_PATH = "./Phraends_Flask/Frontend/constituents.csv"
+CONSTITUENTS_CSV_PATH = "./Phraends_Pkg/Frontend/constituents.csv"
 
 class App():
 

@@ -1,5 +1,4 @@
 import openai
-from Phraends_Flask.Backend.Crawler import Crawler
 
 class ModelAPI:
 
