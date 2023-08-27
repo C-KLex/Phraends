@@ -2,10 +2,9 @@ import streamlit as st
 import pandas as pd
 import yfinance as yf
 import plotly.graph_objects as go
+import datetime
 
-import Phraends_Flask.util.get_yearlist
-from Phraends_Flask.util.get_trending_tickers import get_top_trending_tickers
-from Phraends_Flask.util.phrases_output import phrases_output_example
+import Phraends_Flask.Backend as backend
 
 CONSTITUENTS_CSV_PATH = "./Phraends_Flask/Frontend/constituents.csv"
 
@@ -27,7 +26,7 @@ class App():
         sp500_df = pd.read_csv(CONSTITUENTS_CSV_PATH)
         self.sp500_ls = sp500_df['Symbol'].tolist()
         self.sections = ['Risk Factors', 'Quantitative and Qualitative Disclosure', 'Management Discussion']
-        self.years = Phraends_Flask.util.get_yearlist.get_yearlist()
+        self.years = self.get_yearlist()
 
         tab1, tab2= st.tabs(["News", "Annual Reports"])
 
@@ -54,7 +53,7 @@ class App():
         return 
     
     def news_tap_summary_section(self, ticker):
-        links, summaries = Phraends_Flask.get_5_summary_from_5_articles(ticker)
+        links, summaries = backend.get_5_summary_from_5_articles(ticker)
 
         st.write("Key links and summaries for the stock ticker you entered:")
         for i, (link, summary) in enumerate(zip(links, summaries)):
@@ -99,3 +98,20 @@ class App():
                 st.write(str(num+1) + ". ", api_returns[num])
         
         return 
+    
+    def get_yearlist(self):
+        """
+        Summary:
+            API for frontend to get a year list for user to pick, the range will be 10 years from latest annual report
+        
+        Args:
+            
+        Returns:
+            years: A list of integer that length will be 10
+        """
+        today = datetime.datetime.today()
+        if today.month >= 11 :
+            years = [number for number in range(today.year, today.year-10, -1)]
+        else:
+            years = [number for number in range(today.year-1, today.year-11, -1)]
+        return years
