@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 import time
 import yfinance as yf
 
-WEBDRIVER_PATH = "./Phraends_Flask/Backend/Crawler/chromedriver.exe"
+WEBDRIVER_PATH = "./Phraends_Pkg/Backend/Crawler/chromedriver.exe"
 
 def get_chrome_driver():
     service = Service(executable_path = WEBDRIVER_PATH)

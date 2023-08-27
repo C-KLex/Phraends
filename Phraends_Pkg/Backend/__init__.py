@@ -1,5 +1,9 @@
-from Phraends_Flask.Backend.Crawler import Crawler
-from Phraends_Flask.Backend.Model_API import ModelAPI
+import streamlit as st
+
+from Phraends_Pkg.Backend.Crawler import Crawler
+from Phraends_Pkg.Backend.Model_API.ModelAPI import ModelAPI
+
+model_api = ModelAPI(True, st["openai_key"]) # st["openai_key"] will make error when running locally
 
 def get_5_summary_from_5_articles(ticker: str):
     """
