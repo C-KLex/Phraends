@@ -1,5 +1,9 @@
+import streamlit as st
+
 from Phraends_Flask.Backend.Crawler import Crawler
-from Phraends_Flask.Backend.Model_API import ModelAPI
+from Phraends_Flask.Backend.Model_API.ModelAPI import ModelAPI
+
+model_api = ModelAPI(True, st["openai_key"])
 
 def get_5_summary_from_5_articles(ticker: str):
     """
@@ -18,7 +22,7 @@ def get_5_summary_from_5_articles(ticker: str):
     summary_list = [] 
 
     link_list, raw_article_list = Crawler.main(ticker)
-    summary_list = ModelAPI.main(raw_article_list)
+    summary_list = model_api.main(raw_article_list)
 
     return link_list, summary_list
 
@@ -37,4 +41,3 @@ def get_summary_from_annualreport(ticker, year, section):
     """
     # Currently a mock API
     return ['summary1', 'summary2', 'summary3', 'summary4', 'summary5']
-
