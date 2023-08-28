@@ -26,6 +26,10 @@ def scrape_article(url):
         class_name = "article-content--body-text"
     elif "foxnews.com" in domain:
         class_name = "article-body"
+    elif "yahoo.com" in domain:
+        class_name = "caas-body-section"
+    elif "reuters.com" in domain:
+        class_name = "article-body__content__17Yit"   
     else:
         print(f"Unsupported domain: {domain}")
         return ""
