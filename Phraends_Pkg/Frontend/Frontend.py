@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import yfinance as yf
 import plotly.graph_objects as go
-import datetime
 
 import Phraends_Pkg.Backend as backend
+from Phraends_Pkg.Frontend import Frontend_Util
 
 CONSTITUENTS_CSV_PATH = "./Phraends_Pkg/Frontend/constituents.csv"
 
@@ -26,7 +26,7 @@ class App():
         sp500_df = pd.read_csv(CONSTITUENTS_CSV_PATH)
         self.sp500_ls = sp500_df['Symbol'].tolist()
         self.sections = ['Risk Factors', 'Quantitative and Qualitative Disclosure', 'Management Discussion']
-        self.years = self.get_yearlist()
+        self.years = Frontend_Util.get_year_list()
 
         tab1, tab2= st.tabs(["News", "Annual Reports"])
 
@@ -98,20 +98,3 @@ class App():
                 st.write(str(num+1) + ". ", api_returns[num])
         
         return 
-    
-    def get_yearlist(self):
-        """
-        Summary:
-            API for frontend to get a year list for user to pick, the range will be 10 years from latest annual report
-        
-        Args:
-            
-        Returns:
-            years: A list of integer that length will be 10
-        """
-        today = datetime.datetime.today()
-        if today.month >= 11 :
-            years = [number for number in range(today.year, today.year-10, -1)]
-        else:
-            years = [number for number in range(today.year-1, today.year-11, -1)]
-        return years
