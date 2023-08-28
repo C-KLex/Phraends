@@ -47,12 +47,12 @@ class App():
 
         if tab1_button:
             
-            self.news_tap_summary_section(ticker)
+            self.news_tap_summary_section_view(ticker)
             self.news_tap_stock_price_section_view(ticker)
 
         return 
     
-    def news_tap_summary_section(self, ticker):
+    def news_tap_summary_section_view(self, ticker):
         links, summaries = backend.get_5_summary_from_5_articles(ticker)
 
         st.write("Key links and summaries for the stock ticker you entered:")
