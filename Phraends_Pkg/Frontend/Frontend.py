@@ -65,7 +65,8 @@ class App():
 
     def news_tap_stock_price_section_view(self, ticker):
 
-        stock_data = yf.download(ticker, start='2020-01-01', end='2023-01-01')
+        start_date, end_date = Frontend_Util.get_three_year_range_from_today()
+        stock_data = yf.download(ticker, start=start_date, end=end_date)
         
         if stock_data.empty:
             st.write(f"No stock data found for {ticker}. Please check the ticker symbol.") 
