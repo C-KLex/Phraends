@@ -29,7 +29,19 @@ def scrape_article(url):
     elif "yahoo.com" in domain:
         class_name = "caas-body-section"
     elif "reuters.com" in domain:
-        class_name = "article-body__content__17Yit"   
+        class_name = "article-body__content__17Yit"  
+    elif "seekingalpha.com" in domain:
+        class_name = "paywall-full-content kt-h s-8" 
+    elif "foxbusiness.com" in domain:
+        class_name = "article-body"
+    elif "wealthmanagement.com" in domain:
+        class_name = "article-content"     
+    elif "wealthmanagement.com" in domain:
+        class_name = "article-content"    
+    elif "investmentnews.com" in domain:
+        class_name = "bon-article-content" 
+    elif "marketwatch.com" in domain:
+        class_name = "article__body"  
     else:
         print(f"Unsupported domain: {domain}")
         return ""
