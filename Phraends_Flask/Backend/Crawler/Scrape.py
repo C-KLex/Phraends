@@ -1,15 +1,8 @@
+from urllib.parse import urlparse
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_cnn(url):
-    response = requests.get(url)
-    html_text = response.text
-    soup = BeautifulSoup(html_text, "html.parser")
-    article_element = soup.find("div", class_="article__content")
-    article_text = article_element.get_text(strip=True) if article_element else ""
-    return article_text
-
-def scrape_investopedia(url):
+def scrape_article(url):
     # Send a GET request to the URL
     response = requests.get(url)
     if response.status_code != 200:
@@ -18,7 +11,26 @@ def scrape_investopedia(url):
 
     articles = []
     soup = BeautifulSoup(response.content, 'html.parser')
-    article_body = soup.find("div", class_="article-body")
+
+    # Determine class name based on URL domain
+    domain = urlparse(url).netloc
+    if "investopedia.com" in domain:
+        class_name = "article-body"
+    elif "cnn.com" in domain:
+        class_name = "article__content"
+    elif "dowjones.com" in domain:
+        class_name = "main"
+    elif "cnbc.com" in domain:
+        class_name = "ArticleBody-articleBody"
+    elif "wcvb.com" in domain:
+        class_name = "article-content--body-text"
+    elif "foxnews.com" in domain:
+        class_name = "article-body"
+    else:
+        print(f"Unsupported domain: {domain}")
+        return ""
+
+    article_body = soup.find("div", class_=class_name)
     if article_body:
         paragraphs = article_body.find_all("p")
         for paragraph in paragraphs:
@@ -31,7 +43,3 @@ def scrape_investopedia(url):
     article_text = article_text.replace(",", "")
 
     return article_text
-
-#def scrape_cnbc(url):
-
-#def scrape_dow_jones(url):
