@@ -1,6 +1,6 @@
-from Phraends_Flask.Frontend.Frontend import App
+import Phraends_Pkg
 
 if __name__ == '__main__':
-    app = App() 
+    app = Phraends_Pkg.get_app()
     app.main_view()
     

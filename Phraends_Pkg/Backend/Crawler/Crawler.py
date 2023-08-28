@@ -8,9 +8,10 @@ from selenium.webdriver.common.keys import Keys
 import time
 import yfinance as yf
 
+WEBDRIVER_PATH = "./Phraends_Pkg/Backend/Crawler/chromedriver.exe"
 
 def get_chrome_driver():
-    service = Service(executable_path=r"./chromedriver.exe")
+    service = Service(executable_path = WEBDRIVER_PATH)
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     driver = webdriver.Chrome(service=service, options=options)
