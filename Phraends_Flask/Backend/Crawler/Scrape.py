@@ -42,6 +42,14 @@ def scrape_article(url):
         class_name = "bon-article-content" 
     elif "marketwatch.com" in domain:
         class_name = "article__body"  
+    elif "nbcnews.com" in domain:
+        class_name = "article-body"
+    elif "forbes.com" in domain:
+        class_name = "main-content"
+    elif "entrepreneur.com" in domain:
+        class_name = "first-letter:float-left first-letter:text-8xl first-letter:pr-1 first-letter:-mt-1 first-letter:font-black first-letter:text-gray-500 prose prose-blue max-w-3xl text-lg leading-relaxed"
+    elif "bbc.com" in domain:
+        class_name = "ssrcss-q03fby-ContainerWithSidebarWrapper e1jl38b40"
     else:
         print(f"Unsupported domain: {domain}")
         return ""
