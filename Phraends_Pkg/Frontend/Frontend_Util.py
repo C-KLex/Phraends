@@ -1,4 +1,5 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 
 def get_year_list():
         """
@@ -17,3 +18,9 @@ def get_year_list():
             years = [number for number in range(today.year-1, today.year-11, -1)]
         return years
 
+def get_three_year_range_from_today():
+
+    end_date = datetime.datetime.now().date()
+    start_date = relativedelta(year=3)
+
+    return str(start_date), str(end_date)
