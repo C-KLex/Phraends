@@ -46,10 +46,19 @@ def target_content(ticker: str):
     mapper = StockMapper()
     # Get mapping from ticker to company name
     company_name = mapper.ticker_to_company_name[ticker.upper()].upper()
+    print("company name = ", company_name)
+    print(filings["Company"])
     target_rows = filings[filings["Company"] == company_name]
+    print("1target_rows = ", target_rows)
     date_before = datetime(int(config["edgar_crawler"]["start_year"]), 1, 1)
     # Only obtain the latest annual report
-    target_rows = target_rows[target_rows["Date"] > date_before].iloc[-1]
+    try:
+        target_rows = target_rows[target_rows["Date"] > date_before].iloc[-1]
+    except:
+        company_name = mapper.ticker_to_company_name[ticker.upper()]
+        target_rows = filings[filings["Company"] == company_name]
+        target_rows = target_rows[target_rows["Date"] > date_before].iloc[-1]
+    print("2target_rows = ", target_rows)
     target_filename = target_rows["filename"].replace(".htm", ".json")
 
     # Open JSON file
