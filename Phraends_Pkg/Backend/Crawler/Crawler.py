@@ -142,67 +142,6 @@ def get_news_from_investopedia(ticker):
     driver.quit()
     return links, articles
 
-
-def get_news_from_dow_jones(ticker):  # apple
-    """
-    Summary:
-        Search the ticker name in Dow Jones, and then crawl down the first five articles.
-
-    Args:
-        ticker (string): the ticker name of the stock
-
-    Returns:
-        links (list): the links to the five articles
-        articles (list): the list contains the five articles
-    """
-    driver = get_chrome_driver()
-    driver.get("https://www.dowjones.com/")
-
-    # Click the search button
-    search_point = driver.find_element(
-        By.XPATH, "/html/body/div[2]/header/div/div[2]/a[1]"
-    )
-    search_point.click()
-
-    # Send in the ticker name
-    search = driver.find_element(
-        By.XPATH, "/html/body/div[6]/div/div/div/div/div/div[3]/form/input"
-    )
-    search.send_keys(str(ticker))
-    search.send_keys(Keys.RETURN)
-
-    # Collect the 5 latest news content
-    links = []
-    articles = []
-    driver.implicitly_wait(5)
-    for i in range(0, 5):
-        if i == 0:
-            elem = driver.find_element(
-                By.XPATH,
-                "/html/body/div[2]/section[2]/div/div/ul/li[2]/div[1]/div[2]/h3/a",
-            )
-        else:
-            elem = driver.find_element(
-                By.XPATH,
-                f"/html/body/div[2]/section[2]/div/div/ul/li[2]/div[{i+1}]/div[2]/h3/a",
-            )
-        url_element = elem.get_attribute("href")
-        links.append(url_element)
-        # Open the new window
-        driver.execute_script("window.open()")
-        driver.switch_to.window(driver.window_handles[i + 1])
-        driver.get(url_element)
-        time.sleep(1)
-        search_point = driver.find_element(
-            By.XPATH, "/html/body/div[2]/section[2]/div/div/div/div"
-        ).text
-        articles.append(str(search_point).replace("\n", " "))
-        # window_handles[0] is a first window
-        driver.switch_to.window(driver.window_handles[0])
-    driver.quit()
-    return links, articles
-
-
 def get_news_from_cnbc(ticker):
     """
     Summary:
