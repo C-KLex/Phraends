@@ -10,7 +10,7 @@ import yfinance as yf
 
 
 def get_chrome_driver():
-    service = Service(executable_path=r"./chromedriver.exe")
+    service = Service(executable_path=r"./chromedriver")
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     driver = webdriver.Chrome(service=service, options=options)
