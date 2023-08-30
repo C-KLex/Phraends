@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 import time
 import yfinance as yf
 
@@ -85,7 +86,7 @@ def get_link_of_10q_10k(ticker):
     return list_of_links
 
 
-def get_news_from_investopedia(ticker):
+def get_news_link_from_investopedia(ticker):
     """
     Summary:
         Search the ticker name in investopedia, and then crawl down the first five articles.
@@ -97,50 +98,31 @@ def get_news_from_investopedia(ticker):
         links (list): the links to the five articles
         articles (list): the list contains the five articles
     """
+    url = f"http://www.investopedia.com/search?q={ticker}"
     driver = get_chrome_driver()
-    driver.get("https://www.investopedia.com/")
+    driver.get(url)
 
-    # Click the search button
-    search_point = driver.find_element(By.CLASS_NAME, "general-search__icon-button")
-    search_point.click()
 
-    # Send in the ticker name
-    search = driver.find_element(
-        By.XPATH, "/html/body/header/div[1]/div[3]/ul/li/div/form/div/input"
-    )
-    search.send_keys(str(ticker))
-    search.send_keys(Keys.RETURN)
-
-    # Collect the 5 latest news content
     links = []
-    articles = []
-    driver.implicitly_wait(5)
-    for i in range(0, 5):
-        if i == 0:
-            elem = driver.find_element(By.XPATH, '//*[@id="search-results__link_1-0"]')
-        else:
-            elem = driver.find_element(
-                By.XPATH, f'//*[@id="search-results__link_1-0-{i}"]'
-            )
-        url_element = elem.get_attribute("href")
-        links.append(url_element)
-        # Open the new window
-        driver.execute_script("window.open()")
-        driver.switch_to.window(driver.window_handles[i + 1])
-        driver.get(url_element)
-        time.sleep(1)
-        # search_point = driver.find_element(By.XPATH, '//*[@id="mntl-sc-page_1-0"]').text
+    search_result_block_links = driver.find_elements(By.CSS_SELECTOR, "#search-results__results_1-0 a")
+
+
+    for e in search_result_block_links:
+        l = e.get_attribute("href")
+        links.append(str(l))
+    
+    end_index = links.index("None")
+    links = links[:end_index]
+
+    # pick first links if available
+    picked_links = [] 
+    for i in range(5):
         try:
-            search_point = driver.find_element(
-                By.CSS_SELECTOR, "#mntl-sc-block-callout-body_1-0"
-            ).text
-            articles.append(str(search_point).replace("\n", " "))
+            picked_links.append(links[i])
         except:
-            print("wrong page")
-        # window_handles[0] is a first window
-        driver.switch_to.window(driver.window_handles[0])
-    driver.quit()
-    return links, articles
+            picked_links.append("")
+    
+    return picked_links 
 
 def get_news_from_cnbc(ticker):
     """
