@@ -2,6 +2,8 @@ from Phraends_Flask.Backend.Crawler import Crawler
 from Phraends_Flask.Backend.Model_API import ModelAPI
 from Phraends_Flask.Backend.Crawler import Scrape
 from Phraends_Flask.Backend.Model_API import URLBart
+from Phraends_Flask.Backend.Crawler import Scrape
+from Phraends_Flask.Backend.Model_API import URLBart
 
 def get_5_summary_from_5_articles(ticker: str):
     """
@@ -51,7 +53,7 @@ def get_summary_from_url(url):
     Returns:
         summarized_text: summary corresponding to the url
     """
-    article_text = Scrape.main(url)
-    summarized_text = URLBart.main(article_text)
+    article_text = scrape_article(url)
+    summarized_text = generate_summarized_text(article_text)
 
     return summarized_text

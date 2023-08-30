@@ -67,22 +67,3 @@ def scrape_article(url):
     article_text = article_text.replace(",", "")
 
     return article_text
-
-def main(url: str):
-    """
-    Summary:
-        scrape the article content from the link by beautiful soup
-    
-    Args:
-        url(string): link of the article
-
-    Returns:
-        article_text(string): article content scraped from the url
-    """
-    url = input("Enter the URL of the article: ")
-    article_text = scrape_article(url)
-    
-    return article_text
-
-if __name__ == "__main__":
-    main()
