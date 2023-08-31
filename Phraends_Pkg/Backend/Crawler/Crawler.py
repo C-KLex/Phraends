@@ -191,31 +191,3 @@ def get_news_from_cnbc(ticker):
 
     driver.quit()
     return links, articles
-
-
-def main(ticker: str):
-    """
-    Summary:
-        Call every functions that can crawl the articles, and append all the articles to one list.
-
-    Args:
-        ticker (string): the ticker name of the stock
-
-    Returns:
-        articles (list): the list contains the articles
-    """
-    company_name = get_company_name_from_ticker_name(ticker)
-    articles = []
-    links = []
-    investo_link, investo = get_news_from_investopedia(ticker)
-    dow_link, dow = get_news_from_dow_jones(company_name)
-    cnbc_link, cnbc = get_news_from_cnbc(ticker)
-
-    articles = investo + dow + cnbc
-    links = investo_link + dow_link + cnbc_link
-
-    return links, articles
-
-
-if __name__ == "__main__":
-    main()
