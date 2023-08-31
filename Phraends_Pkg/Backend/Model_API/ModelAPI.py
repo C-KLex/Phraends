@@ -1,4 +1,5 @@
 import openai
+import random
 from Phraends_Pkg.Backend.Crawler import Crawler
 
 class ModelAPI:
@@ -7,6 +8,13 @@ class ModelAPI:
         self.use_gpt_api = use_gpt_api
         self.TESTING_ARTICAL = TESTING_ARTICAL
         self.api_key = api_key
+
+    def choose_random_articles(article_n, num=5):
+        if num > len(article_n):
+            num = len(article_n)
+
+        article_5 = random.sample(article_n, num)
+        return article_5
 
     def summarize_article(self, article_text):
         response = openai.ChatCompletion.create(
