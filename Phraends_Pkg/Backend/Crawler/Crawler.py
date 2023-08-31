@@ -108,86 +108,53 @@ def get_news_link_from_investopedia(ticker):
 
     # pick first links if available
     picked_links = [] 
-    for i in range(5):
-        try:
-            picked_links.append(links[i])
-        except:
-            picked_links.append("")
-    
-    return picked_links 
+    if len(links) != 5:
+        picked_links += [""] * (5 - len(picked_links))
+
+    return picked_links[:5] 
 
 def get_news_from_cnbc(ticker):
     """
-    Summary:
-        Search the ticker name in cnbc, and then crawl down the first five articles.
-
-    Args:
-        ticker (string): the ticker name of the stock
-
-    Returns:
-        links (list): the links to the five articles
-        open("the_news_texts.txt", mode="r") (txt file): the txt file contains the five articles
+        ticker names -> 5 string (links or empty string but 5 members in total) 
     """
+    def is_valid_link(link):
+
+        if link == "https://www.cnbc.com/investingclub/":
+            return False 
+        elif link == "https://www.cnbc.com/pro/":
+            return False
+        elif link.startswith("https://www.cnbc.com/video/"):
+            return False
+
+        return True
+
+    url = f"https://www.cnbc.com/quotes/{ticker}?qsearchterm={ticker}"
     driver = get_chrome_driver()
-    driver.get("https://www.cnbc.com/")
+    driver.get(url)
 
-    # Click the search button
-    search_point = driver.find_element(By.CLASS_NAME, "icon-search")
-    search_point.click()
-
-    # Send in the ticker name
-    search = driver.find_element(By.XPATH, '//*[@id="SearchEntry-searchForm"]/input[2]')
-    search.send_keys(str(ticker))
-    search.send_keys(Keys.RETURN)
-
-    # Collect the 5 latest news content
     links = []
-    articles = []
-    driver.implicitly_wait(5)
+    latest_on_block = driver.find_elements(By.CSS_SELECTOR, "#MainContentContainer > div > div.QuotePageBuilder-row > div.QuotePageBuilder-mainContent.QuotePageBuilder-col > div.QuotePageTabs > div:nth-child(3) a")
+    for e in latest_on_block:
 
-    skip_time = 0
-    for i in range(0, 5):
-        try:
-            # club or pro
-            skip_sign1 = driver.find_element(
-                By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a[1]/img'
-            )
-            skip_time = skip_time + 1
-            continue
+        l = e.get_attribute("href")
 
-        except:
-            try:
-                # pure video
-                skip_sign2 = driver.find_element(
-                    By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a/img'
-                )
-                skip_time = skip_time + 1
-                continue
+        if not is_valid_link(l):
+            continue 
 
-            except:
-                try:
-                    elem = driver.find_element(
-                        By.XPATH, f'//*[@id="QuotePage-latestNews-0-{i}"]/div/div/a'
-                    )
-                    url_element = elem.get_attribute("href")
-                    links.append(url_element)
-                    # Open the new window
-                    driver.execute_script("window.open()")
-                    driver.switch_to.window(driver.window_handles[i - skip_time + 1])
-                    driver.get(url_element)
-                    time.sleep(5)
-                    try:
-                        search_point = driver.find_element(
-                            By.CLASS_NAME, "ArticleBody-articleBody"
-                        ).text
-                        articles.append(str(search_point).replace("\n", " "))
-                    except:
-                        print("can't find article body")
-                    # window_handles[0] is a first window
-                    driver.switch_to.window(driver.window_handles[0])
+        links.append(str(l))
 
-                except:
-                    pass
+    content_from_out_affiliate_block = driver.find_elements(By.CSS_SELECTOR, "#MainContentContainer > div > div.QuotePageBuilder-row > div.QuotePageBuilder-mainContent.QuotePageBuilder-col > div.QuotePageTabs > div:nth-child(5) a")
+    for e in content_from_out_affiliate_block:
 
-    driver.quit()
-    return links, articles
+        l = e.get_attribute("href")
+
+        links.append(str(l))
+
+    for l in links:
+        print(l)
+
+    if len(links) != 5:
+        links += [""] * (5 - len(links))
+
+    return links[:5]
+
