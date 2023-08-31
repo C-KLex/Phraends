@@ -88,15 +88,7 @@ def get_link_of_10q_10k(ticker):
 
 def get_news_link_from_investopedia(ticker):
     """
-    Summary:
-        Search the ticker name in investopedia, and then crawl down the first five articles.
-
-    Args:
-        ticker (string): the ticker name of the stock
-
-    Returns:
-        links (list): the links to the five articles
-        articles (list): the list contains the five articles
+    ticker names -> 5 string (links or empty string but 5 members in total) 
     """
     url = f"http://www.investopedia.com/search?q={ticker}"
     driver = get_chrome_driver()
