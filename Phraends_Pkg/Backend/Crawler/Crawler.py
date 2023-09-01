@@ -148,9 +148,6 @@ class Crawler:
 
             links.append(str(l))
             
-        if len(links) != 5:
-            links += [""] * (5 - len(links))
-
         return links[0:5]
 
     def random_pick_links(self, links, num=5):
@@ -207,8 +204,8 @@ class Crawler:
             list[str]: A list of urls
             list[str]: A list of articles
         """
-        links = self.get_news_link_from_investopedia(ticker)  + self.get_news_from_cnbc(ticker)
+        links = self.get_news_link_from_investopedia(ticker)  + self.get_news_link_from_cnbc(ticker)
         rlinks = self.random_pick_links(links)
-        rlinks, articles = self.scrape_links(rlinks)
         print(rlinks)
+        rlinks, articles = self.scrape_links(rlinks)
         return rlinks, articles
