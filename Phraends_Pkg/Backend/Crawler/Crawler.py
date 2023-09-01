@@ -3,7 +3,9 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
+from Phraends_Pkg.Backend.Crawler import Scrape
 import time
+import random
 import yfinance as yf
 
 WEBDRIVER_PATH = "./Phraends_Pkg/Backend/Crawler/chromedriver.exe"
@@ -93,7 +95,7 @@ class Crawler:
         ticker names -> 5 string (links or empty string but 5 members in total) 
         """
         url = f"http://www.investopedia.com/search?q={ticker}"
-        driver = self, get_chrome_driver()
+        driver = self.get_chrome_driver()
         driver.get(url)
 
 
@@ -107,15 +109,9 @@ class Crawler:
         
         end_index = links.index("None")
         links = links[:end_index]
+        return links
 
-        # pick first links if available
-        picked_links = [] 
-        if len(links) != 5:
-            picked_links += [""] * (5 - len(picked_links))
-
-        return picked_links[:5] 
-
-    def get_news_from_cnbc(self, ticker):
+    def get_news_link_from_cnbc(self, ticker):
         """
             ticker names -> 5 string (links or empty string but 5 members in total) 
         """
@@ -151,12 +147,68 @@ class Crawler:
             l = e.get_attribute("href")
 
             links.append(str(l))
-
-        for l in links:
-            print(l)
-
+            
         if len(links) != 5:
             links += [""] * (5 - len(links))
 
-        return links[:5]
+        return links[0:5]
 
+    def random_pick_links(self, links, num=5):
+        """
+        Summary:
+            A function that helps to pick url randomly.
+
+        Args:
+            links (list[str]): A list of urls
+            num (int, optional): The number of desire output links. Defaults to 5.
+
+        Returns:
+            list[str]: A list of urls that pick randomly from links.
+        """
+        if num < len(links):
+            rlinks = random.sample(links, num)
+        return rlinks
+
+    def scrape_links(self, links):
+        """
+        Summary:
+            Get articlse from links by using scrape.py. It will also delete websites that need subscription.
+
+        Args:
+            links (list[str]): A list of urls
+
+        Returns:
+            list[str]: A list of urls
+            list[str]: A list of articles
+        """
+        articles = []
+        remove_list = []
+        for link in links:
+            article = Scrape.scrape_article(link)
+            if len(article) > 400:
+                articles.append(article)
+            else:
+                remove_list.append(link)
+        
+        for link in remove_list:
+            links.remove(link)
+
+        return links, articles
+
+    def get_articles(self, ticker):
+        """
+        Summary:
+            The main funtion of crawler. It will return a list of links and a list of articles from finance websites.
+
+        Args:
+            ticker (str): Ticker name of a company
+
+        Returns:
+            list[str]: A list of urls
+            list[str]: A list of articles
+        """
+        links = self.get_news_link_from_investopedia(ticker)  + self.get_news_from_cnbc(ticker)
+        rlinks = self.random_pick_links(links)
+        rlinks, articles = self.scrape_links(rlinks)
+        print(rlinks)
+        return rlinks, articles
