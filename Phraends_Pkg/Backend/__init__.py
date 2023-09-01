@@ -1,9 +1,11 @@
 import streamlit as st
 
-from Phraends_Pkg.Backend.Crawler import Crawler
+from Phraends_Pkg.Backend.Crawler.Crawler import Crawler
 from Phraends_Pkg.Backend.Model_API.ModelAPI import ModelAPI
 
 model_api = ModelAPI(True, st["openai_key"]) # st["openai_key"] will make error when running locally
+crawler = Crawler()
+
 
 def get_5_summary_from_5_articles(ticker: str):
     """
@@ -21,9 +23,9 @@ def get_5_summary_from_5_articles(ticker: str):
     link_list = [] 
     summary_list = [] 
 
-    link_list, raw_article_list = Crawler.main(ticker)
+    link_list, raw_article_list = crawler.get_articles(ticker)
     summary_list = ModelAPI.main(raw_article_list)
-
+    
     return link_list, summary_list
 
 def get_summary_from_annualreport(ticker, year, section):
