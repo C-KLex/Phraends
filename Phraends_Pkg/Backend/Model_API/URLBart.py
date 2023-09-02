@@ -1,5 +1,5 @@
 from transformers import pipeline
-from Phraends_Flask.Backend.Crawler import Scrape
+from Phraends_Pkg.Backend.Crawler import Scrape
 
 def generate_summarized_text(article_text):
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
