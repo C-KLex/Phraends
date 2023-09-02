@@ -3,25 +3,31 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
-from Phraends_Pkg.Backend.Crawler import Scrape
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import random
 import yfinance as yf
+import streamlit as st
+
+from Phraends_Pkg.Backend.Crawler import Scrape
+
 
 WEBDRIVER_PATH = "./Phraends_Pkg/Backend/Crawler/chromedriver.exe"
+@st.cache_resource
+def get_chrome_driver():
+    options = Options()
+    options.add_argument('--disable-gpu')
+    options.add_argument('--headless')
+    
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 class Crawler:
     
     def __init__(self):
         self.WEBDRIVER_PATH = "./Phraends_Pkg/Backend/Crawler/chromedriver.exe"
-
-    def get_chrome_driver(self):
-        service = Service(executable_path = WEBDRIVER_PATH)
-        options = webdriver.ChromeOptions()
-        options.add_experimental_option("excludeSwitches", ["enable-logging"])
-        driver = webdriver.Chrome(service=service, options=options)
-        return driver
-
 
     def get_company_name_from_ticker_name(self, ticker: str):
         """
@@ -53,7 +59,7 @@ class Crawler:
         Returns:
             list_of_links (list): The list contains the four links of the reports.
         """
-        driver = self.get_chrome_driver()
+        driver = get_chrome_driver()
         # Go to SEC company search website
         driver.get("https://www.sec.gov/edgar/searchedgar/companysearch")
 
@@ -95,7 +101,7 @@ class Crawler:
         ticker names -> 5 string (links or empty string but 5 members in total) 
         """
         url = f"http://www.investopedia.com/search?q={ticker}"
-        driver = self.get_chrome_driver()
+        driver = get_chrome_driver()
         driver.get(url)
 
 
@@ -131,7 +137,7 @@ class Crawler:
             return True
 
         url = f"https://www.cnbc.com/quotes/{ticker}?qsearchterm={ticker}"
-        driver = self.get_chrome_driver()
+        driver = get_chrome_driver()
         driver.get(url)
 
         links = []
