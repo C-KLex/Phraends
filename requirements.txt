@@ -43,6 +43,7 @@ Pygments==2.16.1
 Pympler==1.0.1
 PySocks==1.7.1
 python-dateutil==2.8.2
+python-dotenv==1.0.0
 pytz==2023.3
 pytz-deprecation-shim==0.1.0.post0
 referencing==0.30.2
@@ -69,6 +70,7 @@ tzlocal==4.3.1
 urllib3==2.0.4
 validators==0.22.0
 watchdog==3.0.0
+webdriver-manager==4.0.0
 webencodings==0.5.1
 wsproto==1.2.0
 yarl==1.9.2

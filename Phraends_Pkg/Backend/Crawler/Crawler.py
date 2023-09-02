@@ -15,7 +15,8 @@ from Phraends_Pkg.Backend.Crawler import Scrape
 
 
 WEBDRIVER_PATH = "./Phraends_Pkg/Backend/Crawler/chromedriver.exe"
-@st.cache_resource
+
+@st.cache_data
 def get_chrome_driver():
     options = Options()
     options.add_argument('--disable-gpu')
