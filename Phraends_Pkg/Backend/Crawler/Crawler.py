@@ -107,8 +107,12 @@ class Crawler:
             l = e.get_attribute("href")
             links.append(str(l))
         
-        end_index = links.index("None")
-        links = links[:end_index]
+        try:
+            end_index = links.index("None")
+            links = links[:end_index]
+        except:
+            pass 
+
         return links
 
     def get_news_link_from_cnbc(self, ticker):
