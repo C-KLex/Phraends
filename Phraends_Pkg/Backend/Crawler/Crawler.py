@@ -210,6 +210,6 @@ class Crawler:
         """
         links = self.get_news_link_from_investopedia(ticker)  + self.get_news_link_from_cnbc(ticker)
         rlinks = self.random_pick_links(links)
-        print(rlinks)
         rlinks, articles = self.scrape_links(rlinks)
+        print(articles)
         return rlinks, articles
