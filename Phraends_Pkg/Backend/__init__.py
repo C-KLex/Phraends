@@ -3,7 +3,7 @@ import streamlit as st
 from Phraends_Pkg.Backend.Crawler.Crawler import Crawler
 from Phraends_Pkg.Backend.Model_API.ModelAPI import ModelAPI
 
-model_api = ModelAPI(True, st["openai_key"]) # st["openai_key"] will make error when running locally
+model_api = ModelAPI(True, "") # st["openai_key"] will make error when running locally
 crawler = Crawler()
 
 
