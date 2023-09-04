@@ -1,11 +1,8 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 import time
 import random
 import yfinance as yf
@@ -26,6 +23,7 @@ def get_chrome_driver():
     #return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     driver = webdriver.Chrome(options=options)
+    print(driver.capabilities)
     return driver
     
 class Crawler:
