@@ -23,7 +23,6 @@ def get_chrome_driver():
     #return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     driver = webdriver.Chrome(options=options)
-    print(driver.capabilities)
     return driver
     
 class Crawler:
