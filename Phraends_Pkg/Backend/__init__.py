@@ -1,7 +1,14 @@
-from Phraends_Flask.Backend.Crawler import Crawler
-from Phraends_Flask.Backend.Model_API import ModelAPI
-from Phraends_Flask.Backend.Crawler import Scrape
-from Phraends_Flask.Backend.Model_API import URLBart
+
+import streamlit as st
+
+from Phraends_Pkg.Backend.Crawler.Crawler import Crawler
+from Phraends_Pkg.Backend.Model_API.ModelAPI import ModelAPI
+from Phraends_Pkg.Backend.Model_API import URLBart
+
+model_api = ModelAPI(True, "PLACEHOLDER") # st["openai_key"] will make error when running locally
+crawler = Crawler()
+
+
 
 def get_5_summary_from_5_articles(ticker: str):
     """
@@ -19,9 +26,9 @@ def get_5_summary_from_5_articles(ticker: str):
     link_list = [] 
     summary_list = [] 
 
-    link_list, raw_article_list = Crawler.main(ticker)
-    summary_list = ModelAPI.main(raw_article_list)
-
+    link_list, raw_article_list = crawler.get_articles(ticker)
+    summary_list = model_api.main(raw_article_list)
+    
     return link_list, summary_list
 
 def get_summary_from_annualreport(ticker, year, section):
@@ -51,7 +58,7 @@ def get_summary_from_url(url):
     Returns:
         summarized_text: summary corresponding to the url
     """
-    article_text = Scrape.scrape_article(url)
+    article_text = model_api.scrape_article(url)
     summarized_text = URLBart.generate_summarized_text(article_text)
 
     return summarized_text
