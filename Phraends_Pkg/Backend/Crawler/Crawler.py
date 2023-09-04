@@ -16,15 +16,18 @@ from Phraends_Pkg.Backend.Crawler import Scrape
 
 WEBDRIVER_PATH = "./Phraends_Pkg/Backend/Crawler/chromedriver.exe"
 
-@st.cache_data
-def get_chrome_driver():
-    options = Options()
-    options.add_argument('--disable-gpu')
-    options.add_argument('--headless')
-    
-    options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
+def get_chrome_driver():
+    options = Options() 
+    options.add_argument("--headless=new")
+    options.add_argument('--disable-gpu')
+    
+    #options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    #return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+    driver = webdriver.Chrome(options=options)
+    return driver
+    
 class Crawler:
     
     def __init__(self):
