@@ -110,7 +110,7 @@ class App():
         if tab3_button:
             if url: 
                 try: 
-                    sum_url = Phraends_Flask.get_summary_from_url(url)
+                    sum_url = backend.get_summary_from_url(url)
                     st.subheader("Article Summary:")
                     st.write(sum_url)
                 except Exception as e:
