@@ -1,7 +1,7 @@
 import os
 import logging
 from time import strftime, gmtime
-from Phraends_Flask.Backend.Edgar_Crawler.__init__ import LOGGING_DIR
+from Phraends_Pkg.Backend.Edgar_Crawler.__init__ import LOGGING_DIR
 
 
 class Logger:

@@ -94,7 +94,7 @@ class App():
         tab2_button = st.button("Run",key="tab2")
 
         if tab2_button:
-            api_returns = Phraends_Flask.get_summary_from_annualreport(ticker, year, section)
+            api_returns = backend.get_summary_from_annualreport(ticker, year, section)
             for num in range(len(api_returns)):
                 st.write(str(num+1) + ". ", api_returns[num])
         
