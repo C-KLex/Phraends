@@ -12,7 +12,7 @@ import logging
 
 from bs4 import BeautifulSoup
 from datetime import datetime
-from Phraends_Flask.Backend.Edgar_Crawler.logger import Logger
+from Phraends_Pkg.Backend.Edgar_Crawler.logger import Logger
 from requests.adapters import HTTPAdapter
 from requests.exceptions import (
     RequestException,
@@ -33,7 +33,7 @@ except ImportError:  # Python 3.5+
         pass
 
 
-from Phraends_Flask.Backend.Edgar_Crawler.__init__ import DATASET_DIR, LOGGING_DIR
+from Phraends_Pkg.Backend.Edgar_Crawler.__init__ import DATASET_DIR, LOGGING_DIR
 
 urllib3_log = logging.getLogger("urllib3")
 urllib3_log.setLevel(logging.CRITICAL)
@@ -51,7 +51,7 @@ def main():
     and calls a crawler method for each one of them.
     """
 
-    with open("Phraends_Flask/Backend/Edgar_Crawler/config.json") as fin:
+    with open("Phraends_Pkg/Backend/Edgar_Crawler/config.json") as fin:
         config = json.load(fin)["edgar_crawler"]
 
     raw_filings_folder = os.path.join(DATASET_DIR, config["raw_filings_folder"])

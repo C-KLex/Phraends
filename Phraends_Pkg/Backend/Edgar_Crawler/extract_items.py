@@ -14,9 +14,9 @@ from pathos.pools import ProcessPool  # multiprocessing
 from tqdm import tqdm
 from typing import List
 
-from Phraends_Flask.Backend.Edgar_Crawler.logger import Logger
+from Phraends_Pkg.Backend.Edgar_Crawler.logger import Logger
 
-from Phraends_Flask.Backend.Edgar_Crawler.__init__ import DATASET_DIR
+from Phraends_Pkg.Backend.Edgar_Crawler.__init__ import DATASET_DIR
 
 # Change the default recursion limit of 1000 to 30000
 sys.setrecursionlimit(30000)
@@ -579,7 +579,7 @@ def main():
     """
     Gets the list of 10K files and extracts all textual items/sections by calling the extract_items() function.
     """
-    with open("Phraends_Flask/Backend/Edgar_Crawler/config.json") as fin:
+    with open("Phraends_Pkg/Backend/Edgar_Crawler/config.json") as fin:
         config = json.load(fin)["extract_items"]
 
     filings_metadata_filepath = os.path.join(
