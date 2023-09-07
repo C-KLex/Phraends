@@ -28,13 +28,10 @@ class App():
         self.sections = ['Risk Factors', 'Quantitative and Qualitative Disclosure', 'Management Discussion']
         self.years = Frontend_Util.get_year_list()
 
-        tab1, tab2= st.tabs(["News", "Annual Reports"])
+        tab1, tab2 = st.tabs(["News", "Annual Report"])
 
         with tab1:
             self.news_tap_view() 
-
-        with tab2:
-            self.annual_report_view()
 
         return 
 
@@ -83,19 +80,4 @@ class App():
         
         st.plotly_chart(fig)
 
-        return 
-
-    def annual_report_view(self):
-        ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', self.sp500_ls, key="2")
-        year = st.selectbox('Year:', self.years)
-        section = st.selectbox('Section:', self.sections)
-
-        st.write("")
-        tab2_button = st.button("Run",key="tab2")
-
-        if tab2_button:
-            api_returns = Phraends_Flask.get_summary_from_annualreport(ticker, year, section)
-            for num in range(len(api_returns)):
-                st.write(str(num+1) + ". ", api_returns[num])
-        
         return 

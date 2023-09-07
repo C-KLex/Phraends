@@ -45,58 +45,6 @@ class Crawler:
         company_name = yf.Ticker(ticker).info["longName"].split(" ", 1)[0]
         return company_name
 
-
-    def get_link_of_10q_10k(self, ticker):
-        """
-        Summary:
-            WebCrawl the most recent quarterly and annually report from SEC
-
-        Description:
-            Currently this function only returns the links of the reports.
-
-        Args:
-            ticker (string): the ticker name of the stock
-
-        Returns:
-            list_of_links (list): The list contains the four links of the reports.
-        """
-        driver = get_chrome_driver()
-        # Go to SEC company search website
-        driver.get("https://www.sec.gov/edgar/searchedgar/companysearch")
-
-        # Enter the company name we want to look up
-        search = driver.find_element(By.ID, "edgar-company-person")
-        search.send_keys(ticker)
-        search.send_keys(Keys.RETURN)
-
-        # Wait for the internet to work
-        wait = WebDriverWait(driver, 10)
-        time.sleep(5)
-
-        list_of_links = []
-        # Get the most recent three 10-Q and one 10-K report
-        link1 = driver.find_element(
-            By.XPATH, "/html/body/main/div[4]/div[2]/div[3]/div/div/ul/li[1]/a[1]"
-        ).get_attribute("href")
-        list_of_links.append(link1)
-        link2 = driver.find_element(
-            By.XPATH, "/html/body/main/div[4]/div[2]/div[3]/div/div/ul/li[2]/a[1]"
-        ).get_attribute("href")
-        list_of_links.append(link2)
-
-        link3 = driver.find_element(
-            By.XPATH, "/html/body/main/div[4]/div[2]/div[3]/div/div/ul/li[3]/a[1]"
-        ).get_attribute("href")
-        list_of_links.append(link3)
-
-        link4 = driver.find_element(
-            By.XPATH, "/html/body/main/div[4]/div[2]/div[3]/div/div/ul/li[4]/a[1]"
-        ).get_attribute("href")
-        list_of_links.append(link4)
-
-        return list_of_links
-
-
     def get_news_link_from_investopedia(self, ticker):
         """
         ticker names -> 5 string (links or empty string but 5 members in total) 
