@@ -2,6 +2,7 @@
 import streamlit as st
 
 from Phraends_Pkg.Backend.Crawler.Crawler import Crawler
+from Phraends_Pkg.Backend.Crawler import Scrape
 from Phraends_Pkg.Backend.Model_API.ModelAPI import ModelAPI
 from Phraends_Pkg.Backend.Model_API import URLBart
 
@@ -58,7 +59,7 @@ def get_summary_from_url(url):
     Returns:
         summarized_text: summary corresponding to the url
     """
-    article_text = model_api.scrape_article(url)
+    article_text = Scrape.scrape_article(url)
     summarized_text = URLBart.generate_summarized_text(article_text)
 
     return summarized_text
