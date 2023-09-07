@@ -1,12 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-import time
 import random
 import yfinance as yf
-import streamlit as st
 
 from Phraends_Pkg.Backend.Crawler import Scrape
 
@@ -92,7 +88,6 @@ class Crawler:
         links = []
         latest_on_block = driver.find_elements(By.CSS_SELECTOR, "#MainContentContainer > div > div.QuotePageBuilder-row > div.QuotePageBuilder-mainContent.QuotePageBuilder-col > div.QuotePageTabs > div:nth-child(3) a")
         for e in latest_on_block:
-            print(e)
             l = e.get_attribute("href")
 
             if not is_valid_link(l):
