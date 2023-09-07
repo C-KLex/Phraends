@@ -31,7 +31,7 @@ def scrape_article(url):
     elif "reuters.com" in domain:
         class_name = "article-body__content__17Yit"  
     elif "seekingalpha.com" in domain:
-        class_name = "paywall-full-content kt-h s-8" 
+        class_name = "kh_i3" 
     elif "foxbusiness.com" in domain:
         class_name = "article-body"
     elif "wealthmanagement.com" in domain:
