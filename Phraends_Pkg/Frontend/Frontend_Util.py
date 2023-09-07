@@ -20,13 +20,6 @@ def get_year_list():
         return years
 
 def get_three_year_range_from_today():
-
     current_date = date.today()
-
-    print(current_date)
-
     past_date = current_date - relativedelta(years=3)
-
-    print(past_date)
-
     return past_date, current_date
