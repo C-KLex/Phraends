@@ -28,14 +28,15 @@ class App():
         self.sections = ['Risk Factors', 'Quantitative and Qualitative Disclosure', 'Management Discussion']
         self.years = Frontend_Util.get_year_list()
 
-        tab1, tab2= st.tabs(["News", "Annual Reports"])
+        tab1, tab2, tab3 = st.tabs(["News", "Annual Reports", "URL"])
 
         with tab1:
             self.news_tap_view() 
 
         with tab2:
             self.annual_report_view()
-
+        with tab3:
+            self.url_view()
         return 
 
     def news_tap_view(self):
@@ -97,5 +98,21 @@ class App():
             api_returns = backend.get_summary_from_annualreport(ticker, year, section)
             for num in range(len(api_returns)):
                 st.write(str(num+1) + ". ", api_returns[num])
-        
+
+        return 
+    
+    def url_view(self):
+        url = st.text_input('Please enter the URL(link) of the article:')
+
+        st.write("")
+        tab3_button = st.button("Run", key="tab3")
+
+        if tab3_button:
+            if url: 
+                try: 
+                    sum_url = backend.get_summary_from_url(url)
+                    st.subheader("Article Summary:")
+                    st.write(sum_url)
+                except Exception as e:
+                    st.error(f"An error occurred: {str(e)}")
         return 
