@@ -88,19 +88,28 @@ class Crawler:
         links = []
         latest_on_block = driver.find_elements(By.CSS_SELECTOR, "#MainContentContainer > div > div.QuotePageBuilder-row > div.QuotePageBuilder-mainContent.QuotePageBuilder-col > div.QuotePageTabs > div:nth-child(3) a")
         for e in latest_on_block:
-            l = e.get_attribute("href")
 
-            if not is_valid_link(l):
-                continue 
+            try:
+                l = e.get_attribute("href")
 
-            links.append(str(l))
+                if not is_valid_link(l):
+                    continue 
+
+                links.append(str(l))
+
+            except:
+                continue
 
         content_from_out_affiliate_block = driver.find_elements(By.CSS_SELECTOR, "#MainContentContainer > div > div.QuotePageBuilder-row > div.QuotePageBuilder-mainContent.QuotePageBuilder-col > div.QuotePageTabs > div:nth-child(5) a")
         for e in content_from_out_affiliate_block:
 
-            l = e.get_attribute("href")
+            try:
+                l = e.get_attribute("href")
 
-            links.append(str(l))
+                links.append(str(l))
+            
+            except:
+                continue
             
         return links[0:5]
 
