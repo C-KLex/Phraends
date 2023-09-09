@@ -58,8 +58,11 @@ class App():
         st.write("Key links and summaries for the stock ticker you entered:")
         for i, (link, summary) in enumerate(zip(links, summaries)):
             num = i + 1
-            st.write(f'{num}. link: ' + link)
-            st.write('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; summary: ' + summary)
+            st.write(f"""
+#### Summary {num} [link to article]({link})
+
+{summary}
+                     """)
         
         return 
 
