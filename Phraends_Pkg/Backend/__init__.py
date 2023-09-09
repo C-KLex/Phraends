@@ -6,7 +6,7 @@ from Phraends_Pkg.Backend.Crawler import Scrape
 from Phraends_Pkg.Backend.Model_API.ModelAPI import ModelAPI
 from Phraends_Pkg.Backend.Model_API import URLBart
 
-model_api = ModelAPI(True, "PLACEHOLDER") # st["openai_key"] will make error when running locally
+model_api = ModelAPI(True, st.secrets["openai_key"]) # st["openai_key"] will make error when running locally
 crawler = Crawler()
 
 

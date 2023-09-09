@@ -1,8 +1,6 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.keys import Keys
 from Phraends_Pkg.Backend.Crawler import Scrape
 import time
 import random
@@ -16,10 +14,14 @@ class Crawler:
         self.WEBDRIVER_PATH = "./Phraends_Pkg/Backend/Crawler/chromedriver.exe"
 
     def get_chrome_driver(self):
-        service = Service(executable_path = WEBDRIVER_PATH)
-        options = webdriver.ChromeOptions()
-        options.add_experimental_option("excludeSwitches", ["enable-logging"])
-        driver = webdriver.Chrome(service=service, options=options)
+        options = Options() 
+        options.add_argument("--headless=new")
+        options.add_argument('--disable-gpu')
+        
+        #options.add_experimental_option("excludeSwitches", ["enable-logging"])
+        #return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+        driver = webdriver.Chrome(options=options)
         return driver
 
 
@@ -37,58 +39,6 @@ class Crawler:
         """
         company_name = yf.Ticker(ticker).info["longName"].split(" ", 1)[0]
         return company_name
-
-
-    def get_link_of_10q_10k(self, ticker):
-        """
-        Summary:
-            WebCrawl the most recent quarterly and annually report from SEC
-
-        Description:
-            Currently this function only returns the links of the reports.
-
-        Args:
-            ticker (string): the ticker name of the stock
-
-        Returns:
-            list_of_links (list): The list contains the four links of the reports.
-        """
-        driver = self.get_chrome_driver()
-        # Go to SEC company search website
-        driver.get("https://www.sec.gov/edgar/searchedgar/companysearch")
-
-        # Enter the company name we want to look up
-        search = driver.find_element(By.ID, "edgar-company-person")
-        search.send_keys(ticker)
-        search.send_keys(Keys.RETURN)
-
-        # Wait for the internet to work
-        wait = WebDriverWait(driver, 10)
-        time.sleep(5)
-
-        list_of_links = []
-        # Get the most recent three 10-Q and one 10-K report
-        link1 = driver.find_element(
-            By.XPATH, "/html/body/main/div[4]/div[2]/div[3]/div/div/ul/li[1]/a[1]"
-        ).get_attribute("href")
-        list_of_links.append(link1)
-        link2 = driver.find_element(
-            By.XPATH, "/html/body/main/div[4]/div[2]/div[3]/div/div/ul/li[2]/a[1]"
-        ).get_attribute("href")
-        list_of_links.append(link2)
-
-        link3 = driver.find_element(
-            By.XPATH, "/html/body/main/div[4]/div[2]/div[3]/div/div/ul/li[3]/a[1]"
-        ).get_attribute("href")
-        list_of_links.append(link3)
-
-        link4 = driver.find_element(
-            By.XPATH, "/html/body/main/div[4]/div[2]/div[3]/div/div/ul/li[4]/a[1]"
-        ).get_attribute("href")
-        list_of_links.append(link4)
-
-        return list_of_links
-
 
     def get_news_link_from_investopedia(self, ticker):
         """
@@ -138,19 +88,27 @@ class Crawler:
         latest_on_block = driver.find_elements(By.CSS_SELECTOR, "#MainContentContainer > div > div.QuotePageBuilder-row > div.QuotePageBuilder-mainContent.QuotePageBuilder-col > div.QuotePageTabs > div:nth-child(3) a")
         for e in latest_on_block:
 
-            l = e.get_attribute("href")
+            try:
+                l = e.get_attribute("href")
 
-            if not is_valid_link(l):
-                continue 
+                if not is_valid_link(l):
+                    continue 
 
-            links.append(str(l))
+                links.append(str(l))
+
+            except:
+                continue
 
         content_from_out_affiliate_block = driver.find_elements(By.CSS_SELECTOR, "#MainContentContainer > div > div.QuotePageBuilder-row > div.QuotePageBuilder-mainContent.QuotePageBuilder-col > div.QuotePageTabs > div:nth-child(5) a")
         for e in content_from_out_affiliate_block:
 
-            l = e.get_attribute("href")
+            try:
+                l = e.get_attribute("href")
 
-            links.append(str(l))
+                links.append(str(l))
+            
+            except:
+                continue
             
         return links[0:5]
 

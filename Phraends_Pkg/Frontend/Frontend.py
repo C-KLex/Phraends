@@ -32,11 +32,10 @@ class App():
 
         with tab1:
             self.news_tap_view() 
-
         with tab2:
-            self.annual_report_view()
+            self.annual_report_tap_view()
         with tab3:
-            self.url_view()
+            self.url_tab_view()
         return 
 
     def news_tap_view(self):
@@ -85,23 +84,11 @@ class App():
         st.plotly_chart(fig)
 
         return 
-
-    def annual_report_view(self):
-        ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', self.sp500_ls, key="2")
-        year = st.selectbox('Year:', self.years)
-        section = st.selectbox('Section:', self.sections)
-
-        st.write("")
-        tab2_button = st.button("Run",key="tab2")
-
-        if tab2_button:
-            api_returns = backend.get_summary_from_annualreport(ticker, year, section)
-            for num in range(len(api_returns)):
-                st.write(str(num+1) + ". ", api_returns[num])
-
+    def annual_report_tap_view(self):
+        st.write("TO BE CONTINUE")
         return 
     
-    def url_view(self):
+    def url_tab_view(self):
         url = st.text_input('Please enter the URL(link) of the article:')
 
         st.write("")
