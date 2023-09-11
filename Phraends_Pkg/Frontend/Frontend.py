@@ -92,6 +92,12 @@ class App():
         return 
     
     def url_tab_view(self):
+        
+        # List of supported websites
+        supported_websites = ["cnn.com", "cnbc.com", "investopedia.com","bbc.com","dowjones.com", "wcvb.com", "foxnews.com", "yahoo.com", "reuters.com", "seekingalpha.com", "foxbusiness.com",  "wealthmanagement.com", "wealthmanagement.com", "investmentnews.com", "marketwatch.com", "nbcnews.com", "forbes.com", "entrepreneur.com"]
+
+        st.write("Supported Websites: " + ", ".join(supported_websites))
+
         url = st.text_input('Please enter the URL(link) of the article:')
 
         st.write("")
@@ -100,6 +106,11 @@ class App():
         if tab3_button:
             if url: 
                 try: 
+                    # Check if the provided URL is from a supported website
+                    is_supported_website = any(website.lower() in url.lower() for website in supported_websites)
+                    if not is_supported_website:
+                        st.warning("Unsupported website.")
+
                     sum_url = backend.get_summary_from_url(url)
                     st.subheader("Article Summary:")
                     st.write(sum_url)
