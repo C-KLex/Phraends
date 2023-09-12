@@ -44,10 +44,13 @@ class App():
         ticker = st.selectbox('Please enter a stock ticker that you would like to learn more about:', self.sp500_ls)
         
         st.write("")
-        tab1_button = st.button("Run", key="tab1")
+        
+        if 'tab1_button' in st.session_state and st.session_state.tab1_button == True:
+            st.session_state.running = True
+        else:
+            st.session_state.running = False
 
-        if tab1_button:
-            
+        if st.button('Run', disabled=st.session_state.running, key='tab1_button'):    
             self.news_tap_summary_section_view(ticker)
             self.news_tap_stock_price_section_view(ticker)
 
